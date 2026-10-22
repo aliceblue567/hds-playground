@@ -4,6 +4,7 @@ import { Component, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { presets, presetByType, fieldsFor, getPath, setPath, renderBlock, blockCode, catalog, type Field } from './registry';
 import { composeWithAI, newBlock, uid, type Block } from './compose';
 import './studio.css';
+import { blockStats } from './stats';
 
 const STORE = 'hds-studio:v1';
 const load = (): { title: string; blocks: Block[] } | null => { try { return JSON.parse(localStorage.getItem(STORE) ?? 'null'); } catch { return null; } };
@@ -48,11 +49,7 @@ export function Studio() {
   useEffect(() => save({ title, blocks }), [title, blocks]);
 
   const selected = blocks.find((b) => b.id === sel) ?? null;
-  const stats = useMemo(() => {
-    const hds = blocks.filter((b) => presetByType.get(b.type)?.kind === 'hds').length;
-    const custom = blocks.filter((b) => presetByType.get(b.type)?.kind === 'custom').length;
-    return { hds, custom, ratio: hds + custom ? Math.round((hds / (hds + custom)) * 1000) / 10 : 100 };
-  }, [blocks]);
+  const stats = useMemo(() => blockStats(blocks), [blocks]);
 
   const add = (type: string) => {
     const nb = newBlock(type);
@@ -78,7 +75,7 @@ export function Studio() {
     try {
       const r = await composeWithAI(prompt, blocks, mode);
       setBlocks(r.blocks); setTitle(r.title); setSel(null); setMode('edit');
-      setMsg({ kind: 'info', text: `블록 ${r.blocks.length}개로 조합했어요.`, list: r.warnings });
+      setMsg({ kind: 'info', text: `전체 블록 ${blockStats(r.blocks).total}개로 조합했어요.`, list: r.warnings });
     } catch (e) {
       setMsg({ kind: 'error', text: (e as Error).message });
     } finally { setBusy(false); }
@@ -151,9 +148,11 @@ export function Studio() {
           <div className="st-frame__bottom">{bottom.map(renderOne)}</div>
         </div>
         <div className="st-stats">
-          <span>HDS 블록 <b>{stats.hds}</b></span>
+          <span>전체 블록 <b>{stats.total}</b></span>
+          <span>HDS <b>{stats.hds}</b></span>
+          <span>레이아웃 <b>{stats.layout}</b></span>
           <span className={stats.custom ? 'is-warn' : undefined}>커스텀 <b>{stats.custom}</b></span>
-          <span className={stats.ratio >= 90 ? 'is-ok' : 'is-warn'}>HDS 비율 <b>{stats.ratio}%</b></span>
+          <span className={stats.ratio !== null && stats.ratio >= 90 ? 'is-ok' : 'is-warn'} title="레이아웃을 제외한 HDS ÷ (HDS + 커스텀). 화면 품질 검증 점수가 아니에요.">HDS 비율 <b>{stats.ratio === null ? '—' : `${stats.ratio}%`}</b></span>
           <button type="button" onClick={() => setShowCode(true)}>코드 보기</button>
           <button type="button" onClick={() => { setBlocks(SAMPLE()); setTitle('상품 상세 (예시)'); setSel(null); }}>예시 불러오기</button>
           <button type="button" onClick={() => { setBlocks([]); setTitle('새 화면'); setSel(null); setMode('new'); }}>비우기</button>

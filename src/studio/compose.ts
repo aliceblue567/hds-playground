@@ -20,6 +20,7 @@ export function systemPrompt(): string {
 규칙
 1. type은 아래 목록에 있는 것만 쓴다. 목록에 없는 UI가 꼭 필요하면 type "Custom"으로 두고 props.label(무엇) · props.reason(왜 HDS로 안 되는지)을 적는다.
 2. props에는 '편집 가능'에 적힌 키만 쓴다. 값은 적힌 허용값 중에서 고른다. 안 적은 키는 기본값이 쓰인다.
+2-1. 점으로 표시된 경로는 중첩 객체로 출력한다. 예: "primaryAction.label" → "primaryAction":{"label":"적용하기"}, "items.0.label" → "items":[{"label":"전체"}]. 사용자가 지정한 버튼 문구를 그대로 반영한다.
 3. 순서는 위에서 아래로. Header는 맨 처음, BottomFixed는 맨 끝에 한 번만.
 4. 섹션마다 SectionTitle을 두고, 섹션 사이는 Divider(thickness "block")로 나눈다.
 5. 문구는 하나투어 여행 상품 맥락의 실제 같은 한국어로 쓴다. 안내는 해요체, 버튼은 짧은 명령형("예약하기").
@@ -52,7 +53,8 @@ export function parseSpec(text: string): { title: string; blocks: Block[]; warni
     }
     let props = structuredClone(preset.defaults);
     for (const f of fieldsFor(preset)) {
-      const v = getPath(given, f.path);
+      // Accept both nested JSON and the dotted field names shown to the model.
+      const v = Object.prototype.hasOwnProperty.call(given, f.path) ? given[f.path] : getPath(given, f.path);
       if (v === undefined) continue;
       if (f.kind === 'enum' && !f.options!.includes(v as never)) { warnings.push(`${type}.${f.path}="${v}"는 허용값이 아님 → 기본값`); continue; }
       if (f.kind === 'boolean') props = setPath(props, f.path, Boolean(v));
