@@ -91,3 +91,10 @@
 .st-catalog summary { cursor: pointer; }
 .st-catalog a { display: block; padding-block: var(--hds-spacing-1); color: var(--hds-fg-brand-primary); overflow-wrap: anywhere; }
 .st-quality-note { flex-basis: 100%; }
+.st-candidate-label { display: block; padding-bottom: var(--hds-spacing-1); color: var(--hds-fg-warning-strong); font-size: var(--hds-caption-lg-size); }
+.st-product-notice { padding: var(--hds-spacing-3); background: var(--hds-bg-warning-subtle); color: var(--hds-fg-warning-strong); border-radius: var(--hds-rounded-md); }
+.st-product-editor { display: grid; gap: var(--hds-spacing-3); }
+.st-product-editor > p, .st-product-editor > small { overflow-wrap: anywhere; color: var(--hds-fg-neutral-muted); }
+.st-recipe-node { border: 1px solid var(--hds-stroke-neutral-subtle); border-radius: var(--hds-rounded-sm); padding: var(--hds-spacing-2); }
+.st-recipe-node summary { cursor: pointer; padding-block: var(--hds-spacing-1); }
+.st-recipe-node .st-field, .st-recipe-node .st-recipe-node { margin-top: var(--hds-spacing-2); }

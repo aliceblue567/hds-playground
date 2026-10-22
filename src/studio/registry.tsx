@@ -4,6 +4,7 @@
 // 배열 · 객체 안의 문구처럼 카탈로그로 표현이 안 되는 것만 extraFields로 적는다.
 import type { ComponentType, ReactNode } from 'react';
 import * as HDS from '@aliceblue567/hds-react';
+import { productDefaults, renderProduct, productCode, recipeLeaves, type ProductProps } from './product';
 import catalogJson from '@aliceblue567/hds-react/ai/hds-catalog.json';
 
 type Val = string | number | boolean;
@@ -14,7 +15,7 @@ const byName = new Map(catalog.components.map((c) => [c.name, c]));
 
 export type FieldKind = 'enum' | 'boolean' | 'text' | 'number';
 export type Field = { path: string; label: string; kind: FieldKind; options?: Val[]; figma?: string; hint?: string };
-export type Kind = 'hds' | 'layout' | 'custom';
+export type Kind = 'hds' | 'layout' | 'product' | 'custom';
 export type Preset = {
   type: string; // 블록 타입 = 보통 HDS 컴포넌트 이름
   title: string;
@@ -58,11 +59,11 @@ export const presets: Preset[] = [
   { type: 'LabelRow', component: 'Label', title: '라벨 묶음', group: '콘텐츠', kind: 'hds', inset: true, defaults: { labels: '무료취소, 노쇼핑, 출발확정', variant: 'tinted', color: 'mint', size: 'small' },
     hiddenProps: ['children', 'leadingIcon', 'trailingIcon'], extraFields: [{ path: 'labels', label: '라벨들(쉼표로 구분)', kind: 'text' }],
     render: ({ labels, ...p }) => <div className="st-row">{list(labels).map((l) => <H.Label key={l} {...p}>{l}</H.Label>)}</div>,
-    code: ({ labels, ...p }) => list(labels).map((l) => `<Label${props(p)}>{${jsx(l)}}</Label>`).join('\n') },
+    code: ({ labels, ...p }) => `<div style={{display:'flex',flexWrap:'wrap',gap:'var(--hds-spacing-1_5)'}}>${list(labels).map((l) => `<Label${props(p)}>{${jsx(l)}}</Label>`).join('\n')}</div>` },
   { type: 'Rating', title: '별점', group: '콘텐츠', kind: 'hds', inset: true, defaults: { value: 4.7, reviewCount: 128, showScore: true }, hiddenProps: ['caption'], extraFields: [{ path: 'value', label: 'value (점수)', kind: 'number' }] },
   { type: 'AccordionGroup', title: '아코디언', group: '콘텐츠', kind: 'hds', defaults: { size: 'medium', type: 'fill', items: [{ title: '포함 사항', children: '왕복 항공권, 호텔 3박, 전 일정 가이드' }, { title: '불포함 사항', children: '개인 경비, 선택 관광, 여행자 보험' }] },
     extraFields: [{ path: 'items.0.title', label: '항목 1 제목', kind: 'text' }, { path: 'items.0.children', label: '항목 1 내용', kind: 'text' }, { path: 'items.1.title', label: '항목 2 제목', kind: 'text' }, { path: 'items.1.children', label: '항목 2 내용', kind: 'text' }] },
-  { type: 'EmptyState', title: '빈 상태', group: '콘텐츠', kind: 'hds', defaults: { type: 'no-result', size: 'compact', showButton: false }, hiddenProps: ['icon', 'onAction', 'placement'] },
+  { type: 'EmptyState', title: '빈 상태', group: '콘텐츠', kind: 'hds', defaults: { type: 'no-result', size: 'compact', showButton: false, heading: '검색 결과가 없어요', description: '다른 조건으로 다시 확인해주세요' }, hiddenProps: ['icon', 'onAction', 'placement'] },
   { type: 'Divider', title: '구분선', group: '콘텐츠', kind: 'hds', defaults: { thickness: 'block' }, hiddenProps: ['length', 'orientation'] },
 
   // ── 입력 · 선택 ──
@@ -71,7 +72,7 @@ export const presets: Preset[] = [
   { type: 'FilterChipRow', component: 'FilterChip', title: '필터 칩 묶음', group: '입력 · 선택', kind: 'hds', inset: true, defaults: { labels: '일본, 동남아, 유럽, 미주', kind: 'option', size: 32, selectedIndex: 0 },
     hiddenProps: ['label', 'selected', 'leadingIcon', 'closeIcon'], extraFields: [{ path: 'labels', label: '칩들(쉼표로 구분)', kind: 'text' }, { path: 'selectedIndex', label: '선택된 칩 번호(0부터)', kind: 'number' }],
     render: ({ labels, selectedIndex, ...p }) => <div className="st-row">{list(labels).map((l, i) => <H.FilterChip key={l} label={l} selected={i === Number(selectedIndex)} {...p} />)}</div>,
-    code: ({ labels, selectedIndex, ...p }) => list(labels).map((l, i) => `<FilterChip label=${jsx(l)}${i === Number(selectedIndex) ? ' selected' : ''}${props(p)} />`).join('\n') },
+    code: ({ labels, selectedIndex, ...p }) => `<div style={{display:'flex',flexWrap:'wrap',gap:'var(--hds-spacing-1_5)'}}>${list(labels).map((l, i) => `<FilterChip label=${jsx(l)}${i === Number(selectedIndex) ? ' selected' : ''}${props(p)} />`).join('\n')}</div>` },
   { type: 'SegmentedControl', title: '세그먼트', group: '입력 · 선택', kind: 'hds', inset: true, defaults: { label: '정렬', options: [{ value: 's0', label: '추천순' }, { value: 's1', label: '가격순' }, { value: 's2', label: '출발일순' }], defaultValue: 's0' },
     extraFields: [{ path: 'options.0.label', label: '옵션 1', kind: 'text' }, { path: 'options.1.label', label: '옵션 2', kind: 'text' }, { path: 'options.2.label', label: '옵션 3', kind: 'text' }] },
   { type: 'CheckboxItem', title: '체크박스', group: '입력 · 선택', kind: 'hds', inset: true, defaults: { label: '[필수] 여행약관 동의' }, hiddenProps: ['indeterminate'] },
@@ -114,6 +115,12 @@ export const presets: Preset[] = [
   { type: 'SkeletonRectangle', title: '영역 로딩', group: '피드백 · 로딩', kind: 'hds', inset: true, defaults: { width: '100%', height: 120 },
     extraFields: [{ path: 'height', label: '높이', kind: 'number' }] },
   { type: 'SkeletonCircle', title: '원형 로딩', group: '피드백 · 로딩', kind: 'hds', inset: true, defaults: { size: 48 } },
+
+  { type: 'Product', title: '프로덕트 컴포넌트 후보', group: '프로덕트 조합', kind: 'product', inset: true,
+    defaults: productDefaults as unknown as Record<string, unknown>,
+    extraFields: [{ path: 'name', label: '컴포넌트 이름', kind: 'text' }, { path: 'purpose', label: '사용 목적', kind: 'text' }, { path: 'reason', label: '새 조합이 필요한 이유', kind: 'text' }],
+    render: (p) => renderProduct(p as unknown as ProductProps, n => renderBlock(presetByType.get(n.type)!, n.props)),
+    code: (p) => productCode(p as unknown as ProductProps, n => blockCode(presetByType.get(n.type)!, n.props)) },
 
   // ── 레이아웃 · 커스텀 ──
   { type: 'SectionTitle', title: '섹션 제목', group: '레이아웃 · 커스텀', kind: 'layout', defaults: { text: '섹션 제목' }, extraFields: [{ path: 'text', label: '제목', kind: 'text' }],
@@ -181,4 +188,29 @@ export function blockCode(preset: Preset, p: Record<string, unknown>): string {
   const name = preset.component ?? preset.type;
   const { children, ...rest } = p;
   return children !== undefined && typeof children === 'string' ? `<${name}${props(rest)}>{${jsx(children)}}</${name}>` : `<${name}${props(p)} />`;
+}
+
+// 재귀 조합의 모든 HDS 의존성을 코드 내보내기에 포함한다.
+export function blockImports(preset: Preset, values: Record<string, unknown>): string[] {
+  if (preset.kind === 'product') return [...new Set(recipeLeaves(values as unknown as ProductProps).flatMap(n => blockImports(presetByType.get(n.type)!, n.props)))];
+  if (preset.kind !== 'hds') return [];
+  return [preset.component ?? preset.type, ...(preset.imports ?? []), ...(preset.type === 'BottomFixed' && values.panelValue ? ['BottomPanelText'] : [])];
+}
+
+export function sanitizeProps(preset: Preset, given: Record<string, unknown>, warnings: string[]): Record<string, unknown> {
+  let values = structuredClone(preset.defaults);
+  for (const f of fieldsFor(preset)) {
+    const v = Object.prototype.hasOwnProperty.call(given, f.path) ? given[f.path] : getPath(given, f.path);
+    if (v === undefined) continue;
+    if (f.kind === 'enum' && !f.options!.includes(v as never)) { warnings.push(`${preset.type}.${f.path}: 허용값이 아니어서 기본값을 사용해요.`); continue; }
+    if (f.kind === 'boolean') {
+      if (typeof v !== 'boolean') { warnings.push(`${preset.type}.${f.path}: 참/거짓 값이 필요해요.`); continue; }
+      values = setPath(values, f.path, v);
+    } else if (f.kind === 'number') {
+      if ((typeof v !== 'number' && typeof v !== 'string') || !Number.isFinite(Number(v)) || Math.abs(Number(v)) > 10000000) { warnings.push(`${preset.type}.${f.path}: 유효한 숫자가 필요해요.`); continue; }
+      values = setPath(values, f.path, Number(v));
+    } else if (f.kind === 'enum') values = setPath(values, f.path, v);
+    else if (typeof v === 'string') values = setPath(values, f.path, v.slice(0, 1200));
+  }
+  return values;
 }

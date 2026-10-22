@@ -1,12 +1,18 @@
 // HDS Studio — HDS 컴포넌트만으로 화면을 조합하는 도구. 시연 · 기획 리뷰용.
 // 왼쪽 팔레트(직접 조합) · 위쪽 프롬프트(AI 조합) · 가운데 360 화면 · 오른쪽 속성 패널(카탈로그에서 유도).
 import { Component, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { presets, presetByType, fieldsFor, getPath, setPath, renderBlock, blockCode, catalog, type Field } from './registry';
+import { presets, presetByType, fieldsFor, getPath, setPath, renderBlock, blockCode, catalog, blockImports } from './registry';
 import { composeWithAI, newBlock, uid, type Block } from './compose';
 import './studio.css';
 import { blockStats } from './stats';
+import { FieldRow } from './FieldRow';
+import { ProductEditor } from './ProductEditor';
+import { type ProductProps } from './product';
 
 const STORE = 'hds-studio:v1';
+const RECIPES = 'hds-studio:products:v1';
+type SavedProduct = { id: string; version: string; props: Record<string, unknown> };
+const loadProducts = (): SavedProduct[] => { try { const data = JSON.parse(localStorage.getItem(RECIPES) ?? '[]'); return Array.isArray(data) ? data.filter(p => p?.id && p?.props?.states).slice(0, 20) : []; } catch { return []; } };
 const load = (): { title: string; blocks: Block[] } | null => { try { return JSON.parse(localStorage.getItem(STORE) ?? 'null'); } catch { return null; } };
 const save = (v: unknown) => { try { localStorage.setItem(STORE, JSON.stringify(v)); } catch { /* 저장 불가 환경 */ } };
 
@@ -35,7 +41,7 @@ class Boundary extends Component<{ children: ReactNode; name: string }, { err: s
 }
 
 export function Studio() {
-  const init = load();
+  const init = useMemo(load, []);
   const [title, setTitle] = useState(init?.title ?? '새 화면');
   const [blocks, setBlocks] = useState<Block[]>(init?.blocks ?? SAMPLE());
   const [sel, setSel] = useState<string | null>(null);
@@ -46,6 +52,8 @@ export function Studio() {
   const [msg, setMsg] = useState<{ kind: 'error' | 'info'; text: string; list?: string[] } | null>(null);
   const [showCode, setShowCode] = useState(false);
   const [search, setSearch] = useState('');
+  const [savedProducts, setSavedProducts] = useState<SavedProduct[]>(loadProducts);
+  const [previous, setPrevious] = useState<{ title: string; blocks: Block[] } | null>(null);
   const matches = (text: string) => text.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase());
   const visiblePresets = presets.filter((p) => matches(`${p.title} ${p.type} ${p.component ?? ''} ${p.group}`));
   const available = new Set(presets.filter(p => p.kind === 'hds').map(p => p.component ?? p.type));
@@ -79,6 +87,7 @@ export function Studio() {
     setBusy(true); setMsg(null);
     try {
       const r = await composeWithAI(prompt, blocks, mode);
+      setPrevious({ title, blocks: structuredClone(blocks) });
       setBlocks(r.blocks); setTitle(r.title); setSel(null); setMode('edit');
       setMsg({ kind: 'info', text: `전체 블록 ${blockStats(r.blocks).total}개로 조합했어요.`, list: r.warnings });
     } catch (e) {
@@ -90,16 +99,28 @@ export function Studio() {
   const body = blocks.filter((b) => !presetByType.get(b.type)?.fixed);
   const bottom = blocks.filter((b) => presetByType.get(b.type)?.fixed === 'bottom');
   const code = useMemo(() => {
-    const used = [...new Set(blocks.map((b) => presetByType.get(b.type)).filter((p) => p?.kind === 'hds').flatMap((p) => [p!.component ?? p!.type, ...(p!.imports ?? [])]))];
-    if (blocks.some((b) => b.type === 'BottomFixed' && b.props.panelValue)) used.push('BottomPanelText');
+    const used = [...new Set(blocks.flatMap(b => blockImports(presetByType.get(b.type)!, b.props)))];
     return `import '@aliceblue567/hds-react/styles';\nimport { ${used.sort().join(', ')} } from '@aliceblue567/hds-react';\n\nexport function Screen() {\n  return (\n    <>\n${blocks.map((b) => blockCode(presetByType.get(b.type)!, b.props).split('\n').map((l) => '      ' + l).join('\n')).join('\n')}\n    </>\n  );\n}\n`;
   }, [blocks]);
+
+  const saveProduct = (block: Block) => {
+    if (savedProducts.length >= 20) { setMsg({ kind: 'error', text: '후보는 이 브라우저에 최대 20개까지 저장할 수 있어요.' }); return; }
+    const next = [...savedProducts, { id: uid(), version: catalog.version, props: structuredClone(block.props) }];
+    try { localStorage.setItem(RECIPES, JSON.stringify(next)); setSavedProducts(next); setMsg({ kind: 'info', text: '프로덕트 후보를 저장했어요. 팔레트에서 다시 추가할 수 있어요.' }); }
+    catch { setMsg({ kind: 'error', text: '브라우저 저장 공간이 부족하거나 저장이 차단되어 있어요.' }); }
+  };
+  const reuseProduct = (saved: SavedProduct) => {
+    const b: Block = { id: uid(), type: 'Product', props: structuredClone(saved.props) };
+    setBlocks(bs => { const at = bs.findIndex(x => presetByType.get(x.type)?.fixed === 'bottom'); return at < 0 ? [...bs, b] : [...bs.slice(0, at), b, ...bs.slice(at)]; });
+    setSel(b.id); setPreview(false);
+  };
 
   const renderOne = (b: Block) => {
     const p = presetByType.get(b.type);
     if (!p) return null;
     return (
-      <div key={b.id} className={['st-block', p.inset && 'st-block--inset', p.kind === 'custom' && 'st-block--custom', !preview && sel === b.id && 'is-selected'].filter(Boolean).join(' ')}>
+      <div key={b.id} className={['st-block', p.inset && 'st-block--inset', p.kind === 'custom' && 'st-block--custom', p.kind === 'product' && 'st-block--product', !preview && sel === b.id && 'is-selected'].filter(Boolean).join(' ')}>
+        {p.kind === 'product' && !preview && <span className="st-candidate-label">{String(b.props.name)} · 후보</span>}
         <Boundary key={JSON.stringify(b.props)} name={p.title}>{renderBlock(p, b.props)}</Boundary>
         {!preview && <div className="st-block__hit" onClick={() => setSel(b.id)} title={`${p.title} (${p.component ?? p.type})`}><span>{p.title}</span></div>}
       </div>
@@ -117,7 +138,7 @@ export function Studio() {
             <option value="new">새로 만들기</option>
             <option value="edit">지금 화면 고치기</option>
           </select>
-          <input value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="예: 패키지 결제 화면 — 여행자 2명, 쿠폰 선택, 결제수단, 약관, 하단 결제 버튼" aria-label="요청" />
+          <input value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="목적 · 필요한 정보 · 주 행동을 적어주세요. HDS에 없는 카드도 조합할 수 있어요" aria-label="요청" />
           <button type="submit" disabled={busy || !prompt.trim()}>{busy ? '조합 중…' : 'AI로 조합'}</button>
         </form>
       </header>
@@ -135,7 +156,8 @@ export function Studio() {
             ))}
           </section>
         ))}
-        {visiblePresets.length === 0 && <p>추가할 수 있는 블록이 없어요.</p>}
+        {visiblePresets.length === 0 && !savedProducts.some(p => matches(String(p.props.name))) && <p>검색에 맞는 블록이 없어요.</p>}
+        {savedProducts.length > 0 && <section><h3>저장한 프로덕트 후보</h3>{savedProducts.filter(p => matches(String(p.props.name))).map(p => <button type="button" key={p.id} onClick={() => reuseProduct(p)}>{String(p.props.name)} <small>HDS {p.version}</small></button>)}</section>}
         <details className="st-catalog" open={search.trim() ? true : undefined}>
           <summary>그 밖의 라이브러리 컴포넌트 ({otherComponents.length})</summary>
           <p>조합 내부 부품이나 아직 Studio에 연결하지 않은 항목이에요. 문서에서 사용법을 확인할 수 있어요.</p>
@@ -162,11 +184,12 @@ export function Studio() {
         </div>
         <div className="st-stats">
           <span>전체 블록 <b>{stats.total}</b></span>
-          <span>HDS <b>{stats.hds}</b></span>
+          <span>HDS 직접 사용 <b>{stats.hds}</b></span>
+          <span>프로덕트 후보 <b>{stats.product}</b></span>
           <span>레이아웃 <b>{stats.layout}</b></span>
           <span className={stats.custom ? 'is-warn' : undefined}>커스텀 <b>{stats.custom}</b></span>
-          <span className={stats.ratio !== null && stats.ratio >= 90 ? 'is-ok' : 'is-warn'} title="레이아웃을 제외한 HDS ÷ (HDS + 커스텀). 화면 품질 검증 점수가 아니에요.">HDS 사용률 <b>{stats.ratio === null ? '—' : `${stats.ratio}%`}</b></span>
-          <small className="st-quality-note">컴포넌트 사용 기준이며, 디자인 일치도 검증 점수는 아니에요.</small>
+          <small className="st-quality-note">후보 내부의 HDS 부품은 속성에서 확인하세요. 블록 수는 디자인 검증 점수가 아니에요.</small>
+          {previous && <button type="button" onClick={() => { setBlocks(previous.blocks); setTitle(previous.title); setPrevious(null); setSel(null); setMsg({ kind: 'info', text: '직전 AI 조합 전 화면으로 되돌렸어요.' }); }}>직전 AI 조합 되돌리기</button>}
           <button type="button" onClick={() => setShowCode(true)}>코드 보기</button>
           <button type="button" onClick={() => { setBlocks(SAMPLE()); setTitle('상품 상세 (예시)'); setSel(null); }}>예시 불러오기</button>
           <button type="button" onClick={() => { setBlocks([]); setTitle('새 화면'); setSel(null); setMode('new'); }}>비우기</button>
@@ -174,9 +197,12 @@ export function Studio() {
       </main>
 
       <aside className="st-inspector" aria-label="속성">
-        {selected ? <Inspector block={selected} onChange={update} onMove={move} onRemove={remove} onDup={dup} /> : (
+        {selected ? <Inspector block={selected} onChange={update} onMove={move} onRemove={remove} onDup={dup} onSave={saveProduct} /> : (
           <div className="st-inspector__empty">
-            <p>화면에서 블록을 누르면 속성을 바꿀 수 있어요.</p>
+            <p><strong>목적 → 정보 → 행동</strong> 순서로 요청해보세요.</p>
+            <p>기존 HDS를 우선 쓰고, 없는 프로덕트 UI는 부품과 토큰을 조합한 후보로 만들어요.</p>
+            <button type="button" onClick={() => setPrompt('예약 후 준비할 일을 안내하는 예약 준비 카드를 만들어줘. 예약 상태, 여행자 정보 입력 여부, 다음 할 일을 보여주고 주 버튼은 여행자 정보 입력하기로 해줘. HDS를 우선 재사용하고 기본·로딩·빈 상태·오류 상태도 포함해줘.')}>예약 준비 카드 요청 예시</button>
+            <p>화면에서 블록을 누르면 속성을 바꿀 수 있어요. 후보의 상태와 내부 부품도 수정할 수 있어요. 실제 데이터 연결·화면 이동은 별도 개발이 필요해요.</p>
             <p>선택지는 컴포넌트 코드에서 자동으로 읽은 것이라 HDS에 없는 값은 고를 수 없어요. <em>Figma</em> 표시는 Figma 컴포넌트 속성 이름이에요.</p>
           </div>
         )}
@@ -185,7 +211,7 @@ export function Studio() {
       {showCode && (
         <div className="st-modal" role="dialog" aria-modal="true" aria-label="코드" onClick={() => setShowCode(false)}>
           <div onClick={(e) => e.stopPropagation()}>
-            <div className="st-modal__bar"><strong>{title} — JSX</strong><button type="button" onClick={() => { navigator.clipboard?.writeText(code); }}>복사</button><button type="button" onClick={() => setShowCode(false)}>닫기</button></div>
+            <div className="st-modal__bar"><strong>{title} — JSX · 현재 표시된 상태</strong><button type="button" onClick={() => { navigator.clipboard?.writeText(code); }}>복사</button><button type="button" onClick={() => setShowCode(false)}>닫기</button></div>
             <pre>{code}</pre>
           </div>
         </div>
@@ -194,7 +220,7 @@ export function Studio() {
   );
 }
 
-function Inspector({ block, onChange, onMove, onRemove, onDup }: { block: Block; onChange: (id: string, path: string, v: unknown) => void; onMove: (id: string, d: -1 | 1) => void; onRemove: (id: string) => void; onDup: (id: string) => void }) {
+function Inspector({ block, onChange, onMove, onRemove, onDup, onSave }: { block: Block; onChange: (id: string, path: string, v: unknown) => void; onMove: (id: string, d: -1 | 1) => void; onRemove: (id: string) => void; onDup: (id: string) => void; onSave: (block: Block) => void }) {
   const p = presetByType.get(block.type)!;
   const fields = fieldsFor(p);
   const doc = catalog.components.find((c) => c.name === (p.component ?? p.type))?.storybook;
@@ -203,6 +229,7 @@ function Inspector({ block, onChange, onMove, onRemove, onDup }: { block: Block;
       <div className="st-insp__head">
         <strong>{p.title}</strong>
         <code>{p.component ?? p.type}</code>
+        {p.kind === 'product' && <span className="st-tag st-tag--custom">프로덕트 후보 · 검토 전</span>}
         {p.kind === 'custom' && <span className="st-tag st-tag--custom">커스텀 · 백로그 후보</span>}
         {p.kind === 'layout' && <span className="st-tag">레이아웃</span>}
       </div>
@@ -211,26 +238,8 @@ function Inspector({ block, onChange, onMove, onRemove, onDup }: { block: Block;
         <button type="button" onClick={() => onRemove(block.id)} className="is-danger">삭제</button>
       </div>
       {fields.map((f) => <FieldRow key={f.path} f={f} value={getPath(block.props, f.path)} onChange={(v) => onChange(block.id, f.path, v)} />)}
+      {p.kind === 'product' && <ProductEditor props={block.props as unknown as ProductProps} onChange={(path, value) => onChange(block.id, path, value)} onSave={() => onSave(block)} />}
       {doc && <a className="st-doc" href={doc} target="_blank" rel="noreferrer">Storybook 문서 열기 ↗</a>}
     </div>
-  );
-}
-
-function FieldRow({ f, value, onChange }: { f: Field; value: unknown; onChange: (v: unknown) => void }) {
-  const head = <span className="st-field__label">{f.label}{f.figma && <em>Figma {f.figma}</em>}</span>;
-  return (
-    <label className="st-field" title={f.hint}>
-      {head}
-      {f.kind === 'enum' && (
-        <select value={JSON.stringify(value ?? null)} onChange={(e) => onChange(JSON.parse(e.target.value))}>
-          {value === undefined && <option value="null">(기본)</option>}
-          {f.options!.map((o) => <option key={String(o)} value={JSON.stringify(o)}>{String(o)}</option>)}
-        </select>
-      )}
-      {f.kind === 'boolean' && <input type="checkbox" checked={Boolean(value)} onChange={(e) => onChange(e.target.checked)} />}
-      {f.kind === 'text' && <input type="text" value={String(value ?? '')} onChange={(e) => onChange(e.target.value)} />}
-      {f.kind === 'number' && <input type="number" value={value === undefined ? '' : Number(value)} onChange={(e) => onChange(e.target.value === '' ? undefined : Number(e.target.value))} />}
-      {f.hint && <small>{f.hint}</small>}
-    </label>
   );
 }
