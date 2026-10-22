@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { screens } from './screens';
+import { Studio } from './studio/Studio';
 import './App.css';
 
 // 화면 목록 + 미리보기 틀. 실험 화면은 src/screens/ 에 폴더 하나로 추가하고 src/screens/index.ts 에 등록한다.
@@ -27,11 +28,13 @@ export function App() {
   }, [theme, platform]);
 
   const screen = screens.find((s) => s.id === current);
+  if (current === 'studio') return <Studio />;
 
   return (
     <div className="pg">
       <aside className="pg__side">
         <div className="pg__brand">HDS Playground</div>
+        <a href="#/studio" className="pg__studio">HDS Studio 열기<small>직접 조합 · 프롬프트로 화면 만들기</small></a>
         <nav className="pg__nav" aria-label="실험 화면">
           {screens.map((s) => (
             <a key={s.id} href={`#/${s.id}`} className={s.id === current ? 'is-current' : undefined}>
@@ -43,14 +46,14 @@ export function App() {
         <div className="pg__controls" role="group" aria-label="미리보기 설정">
           <label>
             테마
-            <select value={theme} onChange={(e) => setTheme(e.target.value as Theme)} data-hds="custom" data-hds-reason="플레이그라운드 도구 UI — 실험 화면이 아님">
+            <select value={theme} onChange={(e) => setTheme(e.target.value as Theme)}>
               <option value="light">Light</option>
               <option value="dark">Dark</option>
             </select>
           </label>
           <label>
             플랫폼
-            <select value={platform} onChange={(e) => setPlatform(e.target.value as Platform)} data-hds="custom" data-hds-reason="플레이그라운드 도구 UI — 실험 화면이 아님">
+            <select value={platform} onChange={(e) => setPlatform(e.target.value as Platform)}>
               <option value="mobile">Mobile 360</option>
               <option value="tablet">Tablet 768</option>
               <option value="desktop">Desktop 1280</option>

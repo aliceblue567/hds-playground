@@ -20,4 +20,9 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },
   },
+  {
+    // Studio · App 틀은 도구 UI(실험 화면이 아님) — 네이티브 입력 요소 허용. 색 · 글자 규칙은 그대로.
+    files: ['src/studio/**', 'src/App.tsx'],
+    rules: { 'hds/no-native-ui': 'off' },
+  },
 );
