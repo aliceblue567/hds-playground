@@ -1,0 +1,16 @@
+/* 참조 화면 레이아웃. 색·글자·간격은 HDS 토큰만(AGENTS.md 규칙 2). */
+.pay { min-height: 100%; padding-bottom: calc(var(--hds-spacing-16) + var(--hds-spacing-12)); background: var(--hds-bg-layer-default); }
+.pay__body { display: flex; flex-direction: column; }
+.pay__h2 { margin: 0; padding: var(--hds-spacing-5) var(--hds-spacing-5) var(--hds-spacing-2); font: var(--hds-title-md-weight-strong) var(--hds-title-md-size)/var(--hds-title-md-line-height) var(--hds-title-md-font); color: var(--hds-fg-neutral-primary); }
+.pay__labels { display: flex; flex-wrap: wrap; gap: var(--hds-spacing-1); padding: 0 var(--hds-spacing-5) var(--hds-spacing-5); }
+.pay__group { display: flex; flex-direction: column; gap: var(--hds-spacing-4); padding: var(--hds-spacing-2) var(--hds-spacing-5) var(--hds-spacing-5); }
+.pay__skeleton { display: flex; flex-direction: column; gap: var(--hds-spacing-4); padding: var(--hds-spacing-5); }
+/* 요금 요약 — data-hds="custom". HDS에 들어가면 이 블록은 지운다. */
+.pay__sum { margin: 0; padding: 0 var(--hds-spacing-5) var(--hds-spacing-5); display: flex; flex-direction: column; gap: var(--hds-spacing-2); }
+.pay__sum > div { display: flex; justify-content: space-between; align-items: baseline; }
+.pay__sum dt { font: var(--hds-body-md-weight-regular) var(--hds-body-md-size)/var(--hds-body-md-line-height) var(--hds-body-md-font); color: var(--hds-fg-neutral-muted); }
+.pay__sum dd { margin: 0; font: var(--hds-body-md-weight-emphasized) var(--hds-body-md-size)/var(--hds-body-md-line-height) var(--hds-body-md-font); color: var(--hds-fg-neutral-primary); }
+.pay__sum dd.is-discount { color: var(--hds-fg-critical-primary); }
+.pay__sum-total { margin-top: var(--hds-spacing-2); padding-top: var(--hds-spacing-3); border-top: 1px solid var(--hds-stroke-neutral-default); }
+.pay__sum-total dt { color: var(--hds-fg-neutral-primary); font-weight: var(--hds-body-md-weight-strong); }
+.pay__sum-total dd { font: var(--hds-title-lg-weight-strong) var(--hds-title-lg-size)/var(--hds-title-lg-line-height) var(--hds-title-lg-font); color: var(--hds-fg-brand-primary); }

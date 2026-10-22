@@ -1,0 +1,2011 @@
+{
+  "version": "0.40.0",
+  "components": [
+    {
+      "component": "Accordion",
+      "figmaGuideNode": "9561:9506",
+      "props": [
+        {
+          "figma": "Fill Width",
+          "code": "type",
+          "values": [
+            "fill",
+            "padding"
+          ],
+          "default": "fill"
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        {
+          "figma": "Show Required",
+          "code": "required",
+          "values": null
+        },
+        {
+          "figma": "Show Helper Text",
+          "code": "helper",
+          "values": null
+        },
+        {
+          "figma": "Show Icon",
+          "code": "icon",
+          "values": null
+        },
+        {
+          "figma": "Show Divider",
+          "code": "divider",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "AccordionGroup",
+      "figmaGuideNode": "9561:9506",
+      "props": [
+        {
+          "figma": "Fill Width",
+          "code": "type",
+          "values": [
+            "fill",
+            "padding"
+          ]
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ]
+        }
+      ]
+    },
+    {
+      "component": "AlertDialog",
+      "figmaGuideNode": "13832:3025",
+      "props": [
+        {
+          "figma": "Show Description",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Show Sub Content",
+          "code": "subContent",
+          "values": null
+        },
+        {
+          "figma": "Action Layout",
+          "code": "confirm",
+          "values": null
+        },
+        {
+          "figma": "Action Layout",
+          "code": "cancel",
+          "values": null
+        },
+        {
+          "figma": "Action Layout",
+          "code": "stacked",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "AlertDialogPanel",
+      "figmaGuideNode": "13832:3025",
+      "props": [
+        {
+          "figma": "Show Description",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Show Sub Content",
+          "code": "subContent",
+          "values": null
+        },
+        {
+          "figma": "Action Layout",
+          "code": "confirm",
+          "values": null
+        },
+        {
+          "figma": "Action Layout",
+          "code": "cancel",
+          "values": null
+        },
+        {
+          "figma": "Action Layout",
+          "code": "stacked",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "AttachmentItem",
+      "figmaGuideNode": "11367:3409",
+      "props": [
+        {
+          "figma": "Show Remove Button",
+          "code": "onRemove",
+          "values": null
+        },
+        {
+          "figma": "Type",
+          "code": "type",
+          "values": [
+            "image",
+            "video"
+          ]
+        },
+        {
+          "figma": "State",
+          "code": "state",
+          "values": [
+            "default",
+            "loading",
+            "error",
+            "disabled"
+          ],
+          "default": "default"
+        },
+        {
+          "figma": "Show Badge",
+          "code": "badge",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "AttachmentTrigger",
+      "figmaGuideNode": "11367:3409",
+      "props": [
+        {
+          "figma": "Content",
+          "figmaValue": "Count",
+          "code": "count",
+          "values": null
+        },
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null,
+          "default": "첨부하기"
+        }
+      ]
+    },
+    {
+      "component": "Avatar",
+      "figmaGuideNode": "8027:557",
+      "props": [
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            20,
+            24,
+            32,
+            40,
+            48,
+            56,
+            64,
+            72,
+            80,
+            104
+          ],
+          "default": 48
+        },
+        {
+          "figma": "Variant",
+          "code": "variant",
+          "values": [
+            "photo",
+            "filled",
+            "line"
+          ]
+        },
+        {
+          "figma": "Show Badge",
+          "code": "badge",
+          "values": null
+        },
+        {
+          "figma": "Show Editable",
+          "code": "editable",
+          "values": null
+        },
+        {
+          "figma": "State",
+          "code": "forceState",
+          "values": [
+            "pressed"
+          ]
+        }
+      ]
+    },
+    {
+      "component": "AvatarGroup",
+      "figmaGuideNode": "8027:557",
+      "props": [
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            20,
+            24,
+            32,
+            40,
+            48,
+            56,
+            64,
+            72,
+            80,
+            104
+          ],
+          "default": 32
+        }
+      ]
+    },
+    {
+      "component": "Banner",
+      "figmaGuideNode": "3471:4174",
+      "props": [
+        {
+          "figma": "Layout Level",
+          "code": "level",
+          "values": [
+            "1",
+            "2",
+            "3",
+            "3-wide",
+            "4",
+            "5",
+            "6-wide"
+          ],
+          "default": "3"
+        },
+        {
+          "figma": "Show Pagination",
+          "code": "pagination",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "BottomAction",
+      "figmaGuideNode": "13837:5947",
+      "props": [
+        {
+          "figma": "Action",
+          "code": "layout",
+          "values": [
+            "primary-only",
+            "dual-equal",
+            "dual-prominent",
+            "primary-with-icon",
+            "primary-with-metrics",
+            "compact-dual"
+          ]
+        },
+        {
+          "figma": "Show Divider",
+          "code": "divider",
+          "values": null,
+          "default": true
+        }
+      ]
+    },
+    {
+      "component": "BottomFixed",
+      "figmaGuideNode": "13837:5947",
+      "props": [
+        {
+          "figma": "Bottom Fixed/Panel",
+          "code": "panel",
+          "values": null
+        },
+        {
+          "figma": "Action",
+          "code": "layout",
+          "values": [
+            "primary-only",
+            "dual-equal",
+            "dual-prominent",
+            "primary-with-icon",
+            "primary-with-metrics",
+            "compact-dual"
+          ]
+        },
+        {
+          "figma": "Show Divider",
+          "code": "divider",
+          "values": null,
+          "default": true
+        }
+      ]
+    },
+    {
+      "component": "BottomNavigation",
+      "figmaGuideNode": "16458:21854",
+      "props": [
+        {
+          "figma": "Platform",
+          "code": "platform",
+          "values": [
+            "ios",
+            "android",
+            "web"
+          ],
+          "default": "web"
+        },
+        {
+          "figma": "Scroll State",
+          "code": "scrollState",
+          "values": [
+            "default",
+            "scrolled"
+          ],
+          "default": "default"
+        }
+      ]
+    },
+    {
+      "component": "BottomPanelDateRange",
+      "figmaGuideNode": "13837:5947",
+      "props": [
+        {
+          "figma": "Panel",
+          "figmaValue": "Hotel Summary",
+          "code": "nights",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "BottomSheet",
+      "figmaGuideNode": "7789:1527",
+      "props": [
+        {
+          "figma": "Show Title",
+          "code": "title",
+          "values": null
+        },
+        {
+          "figma": "Show Description",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Show Handle",
+          "code": "dismiss",
+          "values": [
+            "handle",
+            "close"
+          ],
+          "default": "handle"
+        },
+        {
+          "figma": "Align",
+          "code": "headerAlign",
+          "values": [
+            "left",
+            "center"
+          ]
+        },
+        {
+          "figma": "Padding",
+          "code": "padding",
+          "values": [
+            "default",
+            "none"
+          ]
+        },
+        {
+          "figma": "Action",
+          "code": "primaryAction",
+          "values": null
+        },
+        {
+          "figma": "Action",
+          "code": "secondaryAction",
+          "values": null
+        },
+        {
+          "figma": "Show Safe Area",
+          "code": "safeArea",
+          "values": null
+        },
+        {
+          "figma": "Slot",
+          "code": "children",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "BottomSheetPanel",
+      "figmaGuideNode": "7789:1527",
+      "props": [
+        {
+          "figma": "Show Title",
+          "code": "title",
+          "values": null
+        },
+        {
+          "figma": "Show Description",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Show Handle",
+          "code": "dismiss",
+          "values": [
+            "handle",
+            "close"
+          ],
+          "default": "handle"
+        },
+        {
+          "figma": "Align",
+          "code": "headerAlign",
+          "values": [
+            "left",
+            "center"
+          ],
+          "default": "left"
+        },
+        {
+          "figma": "Padding",
+          "code": "padding",
+          "values": [
+            "default",
+            "none"
+          ],
+          "default": "default"
+        },
+        {
+          "figma": "Action",
+          "code": "primaryAction",
+          "values": null
+        },
+        {
+          "figma": "Action",
+          "code": "secondaryAction",
+          "values": null
+        },
+        {
+          "figma": "Show Safe Area",
+          "code": "safeArea",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "Slot",
+          "code": "children",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Button",
+      "figmaGuideNode": "13837:5947",
+      "props": [
+        {
+          "figma": "컴포넌트 세트",
+          "code": "variant",
+          "values": [
+            "solid",
+            "outlined",
+            "text"
+          ],
+          "default": "solid"
+        },
+        {
+          "figma": "Type",
+          "code": "tone",
+          "values": [
+            "primary",
+            "secondary",
+            "neutral",
+            "assistive",
+            "white",
+            "default",
+            "grey"
+          ]
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "xxlarge",
+            "xlarge",
+            "large",
+            "medium",
+            "small",
+            "xsmall"
+          ],
+          "default": "large"
+        },
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null
+        },
+        {
+          "figma": "Show Leading Icon",
+          "code": "leadingIcon",
+          "values": null
+        },
+        {
+          "figma": "Show Trailing Icon",
+          "code": "trailingIcon",
+          "values": null
+        },
+        {
+          "figma": "Show Arrow",
+          "code": "arrow",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "Show Underline",
+          "code": "underline",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Sub Label",
+          "code": "subLabel",
+          "values": null
+        },
+        {
+          "figma": "Sub Label Position",
+          "code": "subLabelPosition",
+          "values": [
+            "left",
+            "top"
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "component": "Calendar",
+      "figmaGuideNode": "822:878",
+      "props": [
+        {
+          "figma": "Calendar/Header",
+          "code": "showMonthTitle",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "Calendar/Month Title",
+          "code": "size",
+          "values": [
+            "default",
+            "small"
+          ],
+          "default": "default"
+        },
+        {
+          "figma": "Show Month Select",
+          "code": "monthSelect",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Checkbox",
+      "figmaGuideNode": "10082:2721",
+      "props": [
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            16,
+            20,
+            24
+          ],
+          "default": 20
+        },
+        {
+          "figma": "Selection",
+          "figmaValue": "Partial",
+          "code": "indeterminate",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "CheckboxItem",
+      "figmaGuideNode": "10082:2721",
+      "props": [
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "xsmall",
+            "small",
+            "medium"
+          ],
+          "default": "small"
+        },
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null
+        },
+        {
+          "figma": "Show Helper Text",
+          "code": "helper",
+          "values": null
+        },
+        {
+          "figma": "Show Icon",
+          "code": "icon",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Selection",
+          "figmaValue": "Partial",
+          "code": "indeterminate",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "ChipTabs",
+      "figmaGuideNode": "13975:34950",
+      "props": [
+        {
+          "figma": "Variant",
+          "code": "variant",
+          "values": [
+            "filled",
+            "outlined"
+          ],
+          "default": "filled"
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        {
+          "figma": "Color",
+          "code": "color",
+          "values": [
+            "black",
+            "blue",
+            "blue-light",
+            "purple",
+            "purple-light"
+          ],
+          "default": "black"
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Selected",
+          "code": "value",
+          "values": null
+        },
+        {
+          "figma": "Tab/Chip Group",
+          "code": "expandable",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Expand",
+          "code": "defaultExpanded",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Expand",
+          "code": "expanded",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "ChoiceChip",
+      "figmaGuideNode": "542:3650",
+      "props": [
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Selected",
+          "code": "selected",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "icon",
+          "code": "icon",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "CounterItem",
+      "figmaGuideNode": "4290:653",
+      "props": [
+        {
+          "figma": "Layout",
+          "code": "layout",
+          "values": [
+            "inline",
+            "stacked"
+          ],
+          "default": "inline"
+        },
+        {
+          "figma": "Show Description",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Show Icon",
+          "code": "tooltip",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "DatePicker",
+      "figmaGuideNode": "20016:2",
+      "props": [
+        {
+          "figma": "Layout",
+          "code": "layout",
+          "values": [
+            "inline",
+            "popover",
+            "sheet"
+          ],
+          "default": "popover"
+        },
+        {
+          "figma": "Selection",
+          "code": "selection",
+          "values": [
+            "single",
+            "range"
+          ],
+          "default": "single"
+        },
+        {
+          "figma": "Show Dropdown Icon",
+          "code": "showMonthYear",
+          "values": null,
+          "default": true
+        }
+      ]
+    },
+    {
+      "component": "DatePickerHeader",
+      "figmaGuideNode": "20016:2",
+      "props": [
+        {
+          "figma": "Expand",
+          "code": "expanded",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Show Dropdown Icon",
+          "code": "showDropdown",
+          "values": null,
+          "default": true
+        }
+      ]
+    },
+    {
+      "component": "DatePickerNavButton",
+      "figmaGuideNode": "20016:2",
+      "props": [
+        {
+          "figma": "Direction",
+          "code": "direction",
+          "values": [
+            "prev",
+            "next"
+          ]
+        }
+      ]
+    },
+    {
+      "component": "DatePickerSheet",
+      "figmaGuideNode": "20016:2",
+      "props": [
+        {
+          "figma": "Selection",
+          "code": "selection",
+          "values": [
+            "single",
+            "range"
+          ],
+          "default": "single"
+        },
+        {
+          "figma": "Show Dropdown Icon",
+          "code": "showMonthYear",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Dialog",
+      "figmaGuideNode": "13832:3025",
+      "props": [
+        {
+          "figma": "Show Title",
+          "code": "title",
+          "values": null
+        },
+        {
+          "figma": "Show Description",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "md",
+            "lg",
+            "xl"
+          ]
+        },
+        {
+          "figma": "Show Close",
+          "code": "showClose",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "Padding",
+          "code": "padding",
+          "values": [
+            "default",
+            "none"
+          ]
+        },
+        {
+          "figma": "Action",
+          "code": "primaryAction",
+          "values": null
+        },
+        {
+          "figma": "Action",
+          "code": "secondaryAction",
+          "values": null
+        },
+        {
+          "figma": "Show Safe Area",
+          "code": "safeArea",
+          "values": null
+        },
+        {
+          "figma": "Slot",
+          "code": "children",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "DialogPanel",
+      "figmaGuideNode": "13832:3025",
+      "props": [
+        {
+          "figma": "Show Title",
+          "code": "title",
+          "values": null
+        },
+        {
+          "figma": "Show Description",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md"
+        },
+        {
+          "figma": "Show Close",
+          "code": "showClose",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "Padding",
+          "code": "padding",
+          "values": [
+            "default",
+            "none"
+          ],
+          "default": "default"
+        },
+        {
+          "figma": "Action",
+          "code": "primaryAction",
+          "values": null
+        },
+        {
+          "figma": "Action",
+          "code": "secondaryAction",
+          "values": null
+        },
+        {
+          "figma": "Show Safe Area",
+          "code": "safeArea",
+          "values": null
+        },
+        {
+          "figma": "Slot",
+          "code": "children",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Divider",
+      "figmaGuideNode": "6362:3354",
+      "props": [
+        {
+          "figma": "Orientation",
+          "code": "orientation",
+          "values": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal"
+        },
+        {
+          "figma": "Tone",
+          "code": "tone",
+          "values": [
+            "default",
+            "strong",
+            "subtle"
+          ],
+          "default": "default"
+        },
+        {
+          "figma": "Thickness",
+          "code": "thickness",
+          "values": [
+            "line",
+            "block"
+          ],
+          "default": "line"
+        }
+      ]
+    },
+    {
+      "component": "FieldButton",
+      "figmaGuideNode": "13837:5947",
+      "props": [
+        {
+          "figma": "Type",
+          "code": "tone",
+          "values": [
+            "assistive",
+            "solid"
+          ],
+          "default": "assistive"
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "large",
+            "xlarge",
+            "xxlarge"
+          ],
+          "default": "small"
+        },
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "FilterChip",
+      "figmaGuideNode": "542:3650",
+      "props": [
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null
+        },
+        {
+          "figma": "Type",
+          "code": "kind",
+          "values": [
+            "option",
+            "dropdown"
+          ],
+          "default": "option"
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            32,
+            36,
+            40
+          ],
+          "default": 32
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Selected",
+          "code": "selected",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Show Leading Icon",
+          "code": "leadingIcon",
+          "values": null
+        },
+        {
+          "figma": "Show Close",
+          "code": "closeIcon",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "FilterResult",
+      "figmaGuideNode": "13837:5947",
+      "props": [
+        {
+          "figma": "Show Reset",
+          "code": "onReset",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "FloatingAction",
+      "figmaGuideNode": "13837:5947",
+      "props": [
+        {
+          "figma": "Action Count",
+          "code": "items",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Header",
+      "figmaGuideNode": "10322:4514",
+      "props": [
+        {
+          "figma": "Type",
+          "code": "type",
+          "values": [
+            "main",
+            "main-simple",
+            "sub",
+            "sub-details",
+            "popup",
+            "search"
+          ],
+          "default": "sub"
+        },
+        {
+          "figma": "Title",
+          "code": "title",
+          "values": null
+        },
+        {
+          "figma": "Logo Slot",
+          "code": "logo",
+          "values": null
+        },
+        {
+          "figma": "Background",
+          "code": "background",
+          "values": [
+            "white",
+            "transparent"
+          ],
+          "default": "white"
+        },
+        {
+          "figma": "Show Gradient",
+          "code": "showGradient",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "Trailing Slot",
+          "code": "actions",
+          "values": null,
+          "default": "[]"
+        }
+      ]
+    },
+    {
+      "component": "IconButton",
+      "figmaGuideNode": "13837:5947",
+      "props": [
+        {
+          "figma": "Type",
+          "figmaValue": "Icon With Label",
+          "code": "count",
+          "values": null
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "xlarge",
+            "medium"
+          ],
+          "default": "medium"
+        }
+      ]
+    },
+    {
+      "component": "ImageFrame",
+      "figmaGuideNode": "8458:1772",
+      "props": [
+        {
+          "figma": "Ratio",
+          "code": "ratio",
+          "values": [
+            "1:1",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:10",
+            "16:9",
+            "2:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "10:16",
+            "9:16",
+            "1:2",
+            "original"
+          ],
+          "default": "1:1"
+        },
+        {
+          "figma": "Radius",
+          "code": "rounded",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Border",
+          "code": "border",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "Label",
+      "figmaGuideNode": "4528:549",
+      "props": [
+        {
+          "figma": "Label",
+          "code": "children",
+          "values": null
+        },
+        {
+          "figma": "Variant",
+          "code": "variant",
+          "values": [
+            "outlined",
+            "tinted",
+            "filled",
+            "tinted-outlined"
+          ],
+          "default": "outlined"
+        },
+        {
+          "figma": "Color",
+          "code": "color",
+          "values": [
+            "purple",
+            "blue",
+            "mint",
+            "pink",
+            "red",
+            "gray",
+            "black"
+          ],
+          "default": "purple"
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "medium"
+          ],
+          "default": "small"
+        },
+        {
+          "figma": "Show Leading Icon",
+          "code": "leadingIcon",
+          "values": null
+        },
+        {
+          "figma": "Show Trailing Icon",
+          "code": "trailingIcon",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "LabelBadge",
+      "figmaGuideNode": "14185:20472",
+      "props": [
+        {
+          "figma": "Label",
+          "code": "children",
+          "values": null
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        {
+          "figma": "Variant",
+          "code": "variant",
+          "values": [
+            "filled",
+            "tinted",
+            "outlined"
+          ],
+          "default": "tinted"
+        },
+        {
+          "figma": "Color",
+          "code": "color",
+          "values": [
+            "purple",
+            "blue"
+          ],
+          "default": "purple"
+        }
+      ]
+    },
+    {
+      "component": "ListCell",
+      "figmaGuideNode": "10459:300",
+      "props": [
+        {
+          "figma": "Leading Content",
+          "code": "leading",
+          "values": null
+        },
+        {
+          "figma": "Trailing Content",
+          "code": "trailing",
+          "values": null
+        },
+        {
+          "figma": "Show Chevron",
+          "code": "chevron",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Show Divider",
+          "code": "divider",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Density",
+          "code": "density",
+          "values": [
+            "compact",
+            "standard",
+            "spacious"
+          ],
+          "default": "standard"
+        },
+        {
+          "figma": "Vertical Align",
+          "code": "verticalAlign",
+          "values": [
+            "top",
+            "center"
+          ],
+          "default": "top"
+        },
+        {
+          "figma": "Selected",
+          "code": "selected",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Disabled",
+          "code": "disabled",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "MessageBadge",
+      "figmaGuideNode": "14185:20472",
+      "props": [
+        {
+          "figma": "Type",
+          "code": "type",
+          "values": [
+            "time",
+            "alarm",
+            "live"
+          ],
+          "default": "time"
+        }
+      ]
+    },
+    {
+      "component": "NotificationBadge",
+      "figmaGuideNode": "14185:20472",
+      "props": [
+        {
+          "figma": "Type",
+          "code": "type",
+          "values": [
+            "count",
+            "new",
+            "dot"
+          ],
+          "default": "count"
+        },
+        {
+          "figma": "Tone",
+          "code": "tone",
+          "values": [
+            "critical",
+            "brand"
+          ],
+          "default": "critical"
+        }
+      ]
+    },
+    {
+      "component": "OverlayActionArea",
+      "figmaGuideNode": "13639:33",
+      "props": [
+        {
+          "figma": "Action",
+          "code": "primaryAction",
+          "values": null
+        },
+        {
+          "figma": "Show Safe Area",
+          "code": "safeArea",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "OverlayBody",
+      "figmaGuideNode": "13639:33",
+      "props": [
+        {
+          "figma": "Padding",
+          "code": "padding",
+          "values": [
+            "default",
+            "none"
+          ],
+          "default": "default"
+        },
+        {
+          "figma": "Has Action",
+          "code": "hasAction",
+          "values": null,
+          "default": true
+        }
+      ]
+    },
+    {
+      "component": "OverlayHeader",
+      "figmaGuideNode": "13639:33",
+      "props": [
+        {
+          "figma": "Show Title",
+          "code": "title",
+          "values": null
+        },
+        {
+          "figma": "Show Description",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Align",
+          "code": "align",
+          "values": [
+            "leading",
+            "center"
+          ],
+          "default": "leading"
+        },
+        {
+          "figma": "Show Handle",
+          "code": "handle",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "Show Close",
+          "code": "showClose",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "Popover",
+      "figmaGuideNode": "21392:2345",
+      "props": [
+        {
+          "figma": "Show Title",
+          "code": "title",
+          "values": null
+        },
+        {
+          "figma": "Body",
+          "code": "content",
+          "values": null
+        },
+        {
+          "figma": "Show Action",
+          "code": "action",
+          "values": null
+        },
+        {
+          "figma": "Show Close",
+          "code": "closable",
+          "values": null,
+          "default": true
+        }
+      ]
+    },
+    {
+      "component": "Radio",
+      "figmaGuideNode": "10082:2721",
+      "props": [
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            20,
+            24
+          ],
+          "default": 20
+        }
+      ]
+    },
+    {
+      "component": "RadioItem",
+      "figmaGuideNode": "10082:2721",
+      "props": [
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "medium"
+          ],
+          "default": "small"
+        },
+        {
+          "figma": "Helper Text",
+          "code": "helper",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "RadioSegmented",
+      "figmaGuideNode": "10082:2721",
+      "props": [
+        {
+          "figma": "Selection",
+          "code": "value",
+          "values": null
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Disabled",
+          "code": "disabled",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Rating",
+      "figmaGuideNode": "9192:1101",
+      "props": [
+        {
+          "figma": "Show Score",
+          "code": "showScore",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "SearchBar",
+      "figmaGuideNode": "16285:258",
+      "props": [
+        {
+          "figma": "Show Back",
+          "code": "showBack",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Show Close",
+          "code": "showClose",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "SearchField",
+      "figmaGuideNode": "16285:258",
+      "props": [
+        {
+          "figma": "Show Search Icon",
+          "code": "showSearchIcon",
+          "values": null,
+          "default": true
+        }
+      ]
+    },
+    {
+      "component": "SegmentedControl",
+      "figmaGuideNode": "16190:33",
+      "props": [
+        {
+          "figma": "Count",
+          "code": "options",
+          "values": null
+        },
+        {
+          "figma": "Selection",
+          "code": "value",
+          "values": null
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Disabled",
+          "code": "disabled",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Select",
+      "figmaGuideNode": "9981:18143",
+      "props": [
+        {
+          "figma": "Show Label",
+          "code": "showLabel",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "Type",
+          "code": "type",
+          "values": [
+            "default",
+            "date",
+            "time",
+            "search"
+          ],
+          "default": "default"
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            40,
+            48
+          ],
+          "default": 48
+        },
+        {
+          "figma": "Show Leading Icon",
+          "code": "leadingIcon",
+          "values": null
+        },
+        {
+          "figma": "Show Helper Text",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Status",
+          "code": "status",
+          "values": [
+            "normal",
+            "negative"
+          ],
+          "default": "normal"
+        }
+      ]
+    },
+    {
+      "component": "SelectChip",
+      "figmaGuideNode": "542:3650",
+      "props": [
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Selected",
+          "code": "selected",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Show Close",
+          "code": "onRemove",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "ShapeBadge",
+      "figmaGuideNode": "14185:20472",
+      "props": [
+        {
+          "figma": "Label",
+          "code": "children",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Slider",
+      "figmaGuideNode": "433:48",
+      "props": [
+        {
+          "figma": "State",
+          "figmaValue": "Disabled",
+          "code": "disabled",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "SliderRange",
+      "figmaGuideNode": "433:48",
+      "props": [
+        {
+          "figma": "Type",
+          "code": "type",
+          "values": [
+            "slider",
+            "input"
+          ]
+        },
+        {
+          "figma": "Show Option",
+          "code": "showOption",
+          "values": null,
+          "default": true
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Disabled",
+          "code": "disabled",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Snackbar",
+      "figmaGuideNode": "8821:3937",
+      "props": [
+        {
+          "figma": "Heading",
+          "code": "message",
+          "values": null
+        },
+        {
+          "figma": "Heading",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Snackbar/Leading Content",
+          "code": "leading",
+          "values": null
+        },
+        {
+          "figma": "button_txt",
+          "code": "action",
+          "values": null
+        },
+        {
+          "figma": "ic-close",
+          "code": "onClose",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Tabs",
+      "figmaGuideNode": "13975:34950",
+      "props": [
+        {
+          "figma": "Alignment",
+          "code": "alignment",
+          "values": [
+            "fixed",
+            "fluid"
+          ],
+          "default": "fixed"
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "large",
+            "small"
+          ],
+          "default": "large"
+        },
+        {
+          "figma": "Color",
+          "code": "color",
+          "values": [
+            "black",
+            "purple"
+          ],
+          "default": "black"
+        },
+        {
+          "figma": "State",
+          "figmaValue": "Selected",
+          "code": "value",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "TextInput",
+      "figmaGuideNode": "14382:2560",
+      "props": [
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            40,
+            48,
+            56
+          ],
+          "default": 48
+        },
+        {
+          "figma": "Status",
+          "code": "status",
+          "values": [
+            "normal",
+            "negative",
+            "positive"
+          ],
+          "default": "normal"
+        },
+        {
+          "figma": "Helper Text",
+          "code": "description",
+          "values": null
+        },
+        {
+          "figma": "Show Clear",
+          "code": "showClear",
+          "values": null,
+          "default": false
+        },
+        {
+          "figma": "Placeholder",
+          "code": "placeholder",
+          "values": null
+        },
+        {
+          "figma": "Show Tooltip",
+          "code": "tooltip",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "Toast",
+      "figmaGuideNode": "8821:3937",
+      "props": [
+        {
+          "figma": "Status",
+          "code": "variant",
+          "values": [
+            "default",
+            "positive",
+            "cautionary",
+            "negative"
+          ],
+          "default": "default"
+        },
+        {
+          "figma": "Status",
+          "code": "icon",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "ToggleSwitch",
+      "figmaGuideNode": "10082:2721",
+      "props": [
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "medium"
+          ],
+          "default": "small"
+        }
+      ]
+    },
+    {
+      "component": "Tooltip",
+      "figmaGuideNode": "21392:2345",
+      "props": [
+        {
+          "figma": "Label",
+          "code": "label",
+          "values": null
+        },
+        {
+          "figma": "Size",
+          "code": "size",
+          "values": [
+            "small",
+            "medium"
+          ],
+          "default": "small"
+        },
+        {
+          "figma": "Position",
+          "code": "position",
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          "default": "bottom"
+        },
+        {
+          "figma": "Show Shortcut",
+          "code": "shortcut",
+          "values": null
+        },
+        {
+          "figma": "Show Close",
+          "code": "closable",
+          "values": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "component": "TooltipBadge",
+      "figmaGuideNode": "21392:2345",
+      "props": [
+        {
+          "figma": "Variant",
+          "code": "variant",
+          "values": [
+            "outlined",
+            "filled"
+          ],
+          "default": "outlined"
+        },
+        {
+          "figma": "Align",
+          "code": "align",
+          "values": [
+            "leading",
+            "center",
+            "trailing"
+          ],
+          "default": "leading"
+        },
+        {
+          "figma": "Show Close",
+          "code": "onClose",
+          "values": null
+        }
+      ]
+    },
+    {
+      "component": "TriggerIcon",
+      "figmaGuideNode": "21392:2345",
+      "props": [
+        {
+          "figma": "Type",
+          "code": "kind",
+          "values": [
+            "question",
+            "alert",
+            "info"
+          ],
+          "default": "info"
+        }
+      ]
+    }
+  ]
+}

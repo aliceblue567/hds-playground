@@ -1,0 +1,17 @@
+# PR마다 HDS 규칙 lint + 드리프트 리포트. 통과해야 미리보기 리뷰로 넘어간다.
+name: hds-check
+on: [pull_request, push]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions: { contents: read, packages: read }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, registry-url: 'https://npm.pkg.github.com', scope: '@aliceblue567' }
+      - run: npm install
+        env: { GITHUB_PACKAGES_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+      - run: npm run check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: hds-report, path: reports/hds-report.json }

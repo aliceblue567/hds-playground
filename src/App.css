@@ -1,0 +1,16 @@
+/* 플레이그라운드 틀(실험 화면이 아님). 색·글자는 HDS 토큰만. */
+.pg { display: flex; min-height: 100dvh; background: var(--hds-bg-layer-basement); }
+.pg__side { width: 240px; flex: none; display: flex; flex-direction: column; gap: var(--hds-spacing-6); padding: var(--hds-spacing-5); background: var(--hds-bg-layer-default); border-right: 1px solid var(--hds-stroke-neutral-subtle); position: sticky; top: 0; height: 100dvh; overflow: auto; }
+.pg__brand { font: var(--hds-title-md-weight-strong) var(--hds-title-md-size)/var(--hds-title-md-line-height) var(--hds-title-md-font); color: var(--hds-fg-neutral-primary); }
+.pg__nav { display: flex; flex-direction: column; gap: var(--hds-spacing-1); }
+.pg__nav a { display: flex; flex-direction: column; gap: var(--hds-spacing-0_5); padding: var(--hds-spacing-2) var(--hds-spacing-3); border-radius: var(--hds-rounded-md); color: var(--hds-fg-neutral-primary); text-decoration: none; font: var(--hds-body-md-weight-regular) var(--hds-body-md-size)/var(--hds-body-md-line-height) var(--hds-body-md-font); }
+.pg__nav a small { font: var(--hds-caption-md-weight-regular) var(--hds-caption-md-size)/var(--hds-caption-md-line-height) var(--hds-caption-md-font); color: var(--hds-fg-neutral-muted); }
+.pg__nav a:hover { background: var(--hds-bg-neutral-subtle); }
+.pg__nav a.is-current { background: var(--hds-bg-brand-subtle); color: var(--hds-fg-brand-primary); }
+.pg__controls { margin-top: auto; display: flex; flex-direction: column; gap: var(--hds-spacing-3); font: var(--hds-caption-lg-weight-regular) var(--hds-caption-lg-size)/var(--hds-caption-lg-line-height) var(--hds-caption-lg-font); color: var(--hds-fg-neutral-muted); }
+.pg__controls label { display: flex; justify-content: space-between; align-items: center; gap: var(--hds-spacing-2); }
+.pg__controls select { font: inherit; color: var(--hds-fg-neutral-primary); background: var(--hds-bg-layer-default); border: 1px solid var(--hds-stroke-neutral-default); border-radius: var(--hds-rounded-sm); padding: var(--hds-spacing-1) var(--hds-spacing-2); }
+.pg__stage { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: var(--hds-spacing-8); }
+.pg__frame { background: var(--hds-bg-layer-default); min-height: 760px; box-shadow: var(--hds-shadow-gray-floating); border-radius: var(--hds-rounded-lg); overflow: hidden; position: relative; }
+.pg__empty { color: var(--hds-fg-neutral-muted); font: var(--hds-body-md-weight-regular) var(--hds-body-md-size)/var(--hds-body-md-line-height) var(--hds-body-md-font); max-width: 480px; }
+.pg__empty code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--hds-fg-neutral-primary); }

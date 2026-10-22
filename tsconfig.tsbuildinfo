@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/mock/booking.ts","./src/mock/flights.ts","./src/mock/index.ts","./src/mock/packages.ts","./src/screens/index.ts","./src/screens/package-payment/PackagePayment.tsx"],"version":"5.9.3"}

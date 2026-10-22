@@ -1,0 +1,32 @@
+{
+  "name": "hds-playground",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "HDS(Hanatour Design System) 바이브코딩 플레이그라운드 — 기획자 · 디자이너 · 개발자가 HDS 컴포넌트만으로 화면을 빠르게 조립해 보는 곳",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --max-warnings 0",
+    "hds:report": "node scripts/hds-report.mjs",
+    "hds:sync-ai": "node scripts/sync-ai-kit.mjs",
+    "check": "npm run lint && npm run hds:report"
+  },
+  "dependencies": {
+    "@aliceblue567/hds-react": "^0.40.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.12.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.8.0",
+    "vite": "^5.4.11"
+  }
+}
