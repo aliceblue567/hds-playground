@@ -1,11 +1,11 @@
 /* HDS Studio 도구 UI. 색 · 글자 · 간격은 HDS 토큰만. */
 .st { --st-font: var(--hds-body-sm-weight-regular) var(--hds-body-sm-size)/var(--hds-body-sm-line-height) var(--hds-body-sm-font);
   display: grid; grid-template-columns: 220px 1fr 300px; grid-template-rows: auto 1fr; height: 100dvh; background: var(--hds-bg-layer-basement); color: var(--hds-fg-neutral-primary); font: var(--st-font); }
-.st button:not(.st-frame *), .st input:not(.st-frame *), .st select:not(.st-frame *) { font: inherit; color: inherit; }
-.st button:not(.st-frame *) { cursor: pointer; background: var(--hds-bg-layer-default); border: 1px solid var(--hds-stroke-neutral-default); border-radius: var(--hds-rounded-sm); padding: var(--hds-spacing-1) var(--hds-spacing-2); }
-.st button:not(.st-frame *):hover { background: var(--hds-bg-neutral-subtle); }
-.st button:not(.st-frame *):disabled { color: var(--hds-fg-neutral-disabled); cursor: default; }
-.st input:not(.st-frame *)[type='text'], .st input:not(.st-frame *)[type='number'], .st select:not(.st-frame *), .st-prompt input { background: var(--hds-bg-layer-default); border: 1px solid var(--hds-stroke-neutral-default); border-radius: var(--hds-rounded-sm); padding: var(--hds-spacing-1) var(--hds-spacing-2); min-width: 0; }
+.st button:not(:where(.st-frame *)), .st input:not(:where(.st-frame *)), .st select:not(:where(.st-frame *)) { font: inherit; color: inherit; }
+.st button:not(:where(.st-frame *)) { cursor: pointer; background: var(--hds-bg-layer-default); border: 1px solid var(--hds-stroke-neutral-default); border-radius: var(--hds-rounded-sm); padding: var(--hds-spacing-1) var(--hds-spacing-2); }
+.st button:not(:where(.st-frame *)):hover { background: var(--hds-bg-neutral-subtle); }
+.st button:not(:where(.st-frame *)):disabled { color: var(--hds-fg-neutral-disabled); cursor: default; }
+.st input:not(:where(.st-frame *))[type='text'], .st input:not(:where(.st-frame *))[type='number'], .st select:not(:where(.st-frame *)), .st-prompt input { background: var(--hds-bg-layer-default); border: 1px solid var(--hds-stroke-neutral-default); border-radius: var(--hds-rounded-sm); padding: var(--hds-spacing-1) var(--hds-spacing-2); min-width: 0; }
 
 .st-top { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--hds-spacing-3); padding: var(--hds-spacing-2) var(--hds-spacing-4); background: var(--hds-bg-layer-default); border-bottom: 1px solid var(--hds-stroke-neutral-subtle); }
 .st-back { color: var(--hds-fg-neutral-muted); text-decoration: none; }
