@@ -43,7 +43,7 @@ export function systemPrompt(): string {
 - 텍스트는 {"type":"Text","props":{"text":"문구",...}}. 선택값: ${JSON.stringify(textOptions)}
 - HTML/JavaScript/CSS/style/className/원시 색상/임의 아이콘을 생성하지 않는다. 부품 스타일은 HDS가 담당한다. 레이아웃·타이포는 위 토큰 선택값만 사용한다.
 - 최대 깊이 4, 상태별 24개 노드 이내로 간결하게 조합한다. 이름은 역할이 드러나게 쓰고, 정식 HDS로 승인됐다고 표현하지 않는다.
-- 버튼은 기존 HDS Button을 사용하고 44px 이상의 터치 영역이 있는 large 이상을 선택한다. 데이터 연결·화면 이동·업무 로직은 구현됐다고 가정하지 않는다.
+- 버튼은 기존 HDS Button을 사용하고 44px 이상의 터치 영역이 있는 xlarge(48) 또는 xxlarge(56)을 선택한다. 데이터 연결·화면 이동·업무 로직은 구현됐다고 가정하지 않는다.
 - 기존 화면 수정에서는 요청하지 않은 블록·텍스트·상태를 보존한다. 기존 조합으로 충분한 곳에 Product를 새로 만들지 않는다.
 - 요청이 모호하면 목적·정보·주 행동을 합리적으로 좁혀 조합하고, 모든 섹션에 불필요한 제목·구분선을 반복하지 않는다.
 Product JSON 예시: ${JSON.stringify({ type: 'Product', props: productDefaults })}
@@ -72,7 +72,11 @@ export function parseSpec(text: string): { title: string; blocks: Block[]; warni
       ? normalizeProduct(given, (type, values): RecipeNode | null => {
         const child = presetByType.get(type);
         if (!child || child.kind !== 'hds' || child.fixed) return null;
-        return { type, props: sanitizeProps(child, values, warnings) };
+        const props = sanitizeProps(child, values, warnings);
+        if (type === 'Button' && props.size !== 'xlarge' && props.size !== 'xxlarge') {
+          props.size = 'xlarge'; warnings.push('프로덕트 버튼은 터치 영역 확보를 위해 xlarge(48)로 맞췄어요.');
+        }
+        return { type, props };
       }, warnings) as unknown as Record<string, unknown>
       : sanitizeProps(preset, given, warnings);
     blocks.push({ id: uid(), type: preset.type, props });

@@ -82,3 +82,9 @@ assert.equal(blockStats([{ type: 'Product' }]).product, 1);
 assert.equal(blockStats([{ type: 'Product' }]).hds, 0);
 assert.throws(() => parseSpec(JSON.stringify({ blocks: [{ type: 'Product', props: { states: { default: [{ type: 'script' }] } } }] })), /표시할 HDS 조합/);
 console.log('Product recipes passed: four states, fallback states, HDS imports, escaped content, rejected unsupported nodes/styles, candidate classification.');
+
+const touchCard = structuredClone(productDefaults);
+touchCard.states.default[0].children!.push({ type: 'Button', props: { label: '확인하기', size: 'small' } });
+const touchParsed = parseSpec(JSON.stringify({ blocks: [{ type: 'Product', props: touchCard }] }));
+const touchProps = touchParsed.blocks[0].props as unknown as ProductProps;
+assert.equal(touchProps.states.default[0].children!.at(-1)!.props.size, 'xlarge');

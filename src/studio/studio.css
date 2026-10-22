@@ -13,9 +13,9 @@
 .st-ver { color: var(--hds-fg-neutral-muted); white-space: nowrap; }
 .st-prompt { flex: 1; display: flex; gap: var(--hds-spacing-2); }
 .st-prompt input { flex: 1; padding: var(--hds-spacing-2) var(--hds-spacing-3); }
-.st-prompt button[type='submit'] { background: var(--hds-bg-brand-default); color: var(--hds-fg-brand-contrast); border-color: transparent; padding-inline: var(--hds-spacing-4); }
+.st-prompt button[type='submit'] { background: var(--hds-bg-brand-default); color: var(--hds-fg-neutral-contrast); border-color: transparent; padding-inline: var(--hds-spacing-4); }
 .st-prompt button[type='submit']:hover { background: var(--hds-bg-brand-hover); }
-.st-prompt button[type='submit']:disabled { background: var(--hds-bg-brand-disabled); }
+.st-prompt button[type='submit']:disabled { background: var(--hds-bg-neutral-muted); color: var(--hds-fg-neutral-disabled-bg); }
 
 .st-palette { overflow: auto; padding: var(--hds-spacing-3); background: var(--hds-bg-layer-default); border-right: 1px solid var(--hds-stroke-neutral-subtle); }
 .st-palette h3 { margin: var(--hds-spacing-3) 0 var(--hds-spacing-1); font: var(--hds-caption-md-weight-emphasized) var(--hds-caption-md-size)/var(--hds-caption-md-line-height) var(--hds-caption-md-font); color: var(--hds-fg-neutral-muted); }
@@ -44,7 +44,7 @@
 .st-block { position: relative; }
 .st-block--inset { padding: var(--hds-spacing-2) var(--hds-spacing-5); }
 .st-block__hit { position: absolute; inset: 0; cursor: pointer; z-index: 3; }
-.st-block__hit span { display: none; position: absolute; top: 0; left: 0; padding: 0 var(--hds-spacing-1); background: var(--hds-bg-brand-default); color: var(--hds-fg-brand-contrast); font: var(--hds-caption-sm-weight-emphasized) var(--hds-caption-sm-size)/var(--hds-caption-sm-line-height) var(--hds-caption-sm-font); }
+.st-block__hit span { display: none; position: absolute; top: 0; left: 0; padding: 0 var(--hds-spacing-1); background: var(--hds-bg-brand-default); color: var(--hds-fg-neutral-contrast); font: var(--hds-caption-sm-weight-emphasized) var(--hds-caption-sm-size)/var(--hds-caption-sm-line-height) var(--hds-caption-sm-font); }
 .st-block__hit:hover { outline: 1px dashed var(--hds-stroke-brand-default); outline-offset: -1px; }
 .st-block__hit:hover span, .st-block.is-selected .st-block__hit span { display: block; }
 .st-block.is-selected > .st-block__hit { outline: 2px solid var(--hds-stroke-brand-default); outline-offset: -2px; }

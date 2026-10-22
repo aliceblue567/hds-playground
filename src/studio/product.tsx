@@ -26,7 +26,7 @@ export const productDefaults: ProductProps = {
     node('Text', { text: '여행 준비를 시작해요', role: 'title', tone: 'primary' }),
     node('LabelRow', { labels: '예약 완료', variant: 'tinted', color: 'mint', size: 'small' }),
     node('Text', { text: '여행자 정보를 입력하고 준비 사항을 확인해주세요.', role: 'body', tone: 'muted' }),
-    node('Button', { label: '여행자 정보 입력하기', variant: 'solid', size: 'large', fullWidth: true }),
+    node('Button', { label: '여행자 정보 입력하기', variant: 'solid', size: 'xlarge', fullWidth: true }),
   ] }] },
 };
 const object = (v: unknown): Record<string, unknown> => v && typeof v === 'object' && !Array.isArray(v) ? v as Record<string, unknown> : {};

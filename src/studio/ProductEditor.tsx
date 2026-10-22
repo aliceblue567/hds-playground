@@ -11,7 +11,7 @@ export function ProductEditor({ props, onChange, onSave }: { props: ProductProps
       if (node.type === 'Text') fields.unshift({ path: 'text', label: '문구', kind: 'text' });
     } else {
       const preset = presetByType.get(node.type);
-      if (preset) fields = fieldsFor(preset);
+      if (preset) fields = fieldsFor(preset).map(f => node.type === 'Button' && f.path === 'size' ? { ...f, options: ['xlarge', 'xxlarge'] } : f);
     }
     return <details className="st-recipe-node" key={path}>
       <summary>{index + 1}. {node.type === 'Stack' ? '레이아웃' : node.type === 'Text' ? String(node.props.text).slice(0, 28) || '텍스트' : presetByType.get(node.type)?.title ?? node.type}</summary>
