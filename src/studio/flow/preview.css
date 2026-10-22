@@ -1,0 +1,6 @@
+.flow-preview { max-width: 100%; }
+.flow-state, .flow-notice { padding: var(--hds-spacing-5); display: grid; gap: var(--hds-spacing-4); }
+.flow-block-hit { position: absolute; inset: 0; width: 100%; border: 0; border-radius: 0; background: transparent; cursor: pointer; z-index: 3; text-align: left; }
+.flow-block-hit span { display: none; position: absolute; top: 0; left: 0; background: var(--hds-bg-brand-default); color: var(--hds-fg-neutral-contrast); padding: var(--hds-spacing-1); font-size: var(--hds-caption-sm-size); }
+.flow-block-hit:hover, .is-selected > .flow-block-hit { outline: 2px solid var(--hds-stroke-brand-default); outline-offset: -2px; }
+.flow-block-hit:hover span, .is-selected > .flow-block-hit span { display: block; }

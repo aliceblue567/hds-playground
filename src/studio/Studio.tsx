@@ -130,7 +130,7 @@ export function Studio() {
   return (
     <div className="st">
       <header className="st-top">
-        <a href="#/" className="st-back">← 목록</a>
+        <a href="#/studio" className="st-back">← 제품 시연</a>
         <strong className="st-brand">HDS Studio</strong>
         <span className="st-ver">hds-react {catalog.version}</span>
         <form className="st-prompt" onSubmit={(e) => { e.preventDefault(); run(); }}>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { screens } from './screens';
 import { Studio } from './studio/Studio';
+import { FlowStudio } from './studio/flow/FlowStudio';
 import './App.css';
 
 // 화면 목록 + 미리보기 틀. 실험 화면은 src/screens/ 에 폴더 하나로 추가하고 src/screens/index.ts 에 등록한다.
@@ -28,13 +29,14 @@ export function App() {
   }, [theme, platform]);
 
   const screen = screens.find((s) => s.id === current);
-  if (current === 'studio') return <Studio />;
+  if (current === 'studio') return <FlowStudio />;
+  if (current === 'studio-blocks') return <Studio />;
 
   return (
     <div className="pg">
       <aside className="pg__side">
         <div className="pg__brand">HDS Playground</div>
-        <a href="#/studio" className="pg__studio">HDS Studio 열기<small>직접 조합 · 프롬프트로 화면 만들기</small></a>
+        <a href="#/studio" className="pg__studio">HDS Studio 열기<small>기획 → 작동 시연 → 검토·개발 전달</small></a>
         <nav className="pg__nav" aria-label="실험 화면">
           {screens.map((s) => (
             <a key={s.id} href={`#/${s.id}`} className={s.id === current ? 'is-current' : undefined}>

@@ -2,7 +2,7 @@ import { PRODUCT_STATES, stateLabels, stackOptions, textOptions, type ProductPro
 import { fieldsFor, getPath, presetByType, blockImports, type Field } from './registry';
 import { FieldRow } from './FieldRow';
 
-export function ProductEditor({ props, onChange, onSave }: { props: ProductProps; onChange: (path: string, value: unknown) => void; onSave: () => void }) {
+export function ProductEditor({ props, onChange, onSave }: { props: ProductProps; onChange: (path: string, value: unknown) => void; onSave?: () => void }) {
   const state = props.state;
   const renderNode = (node: RecipeNode, path: string, index: number) => {
     let fields: Field[] = [];
@@ -24,7 +24,7 @@ export function ProductEditor({ props, onChange, onSave }: { props: ProductProps
     <label className="st-field"><span>확인할 상태</span><select value={state} onChange={e => onChange('state', e.target.value)}>{PRODUCT_STATES.map(key => <option key={key} value={key}>{stateLabels[key]}</option>)}</select></label>
     <p>사용 부품: {blockImports(presetByType.get('Product')!, props as unknown as Record<string, unknown>).join(', ')}</p>
     {props.states[state].map((node, i) => renderNode(node, `states.${state}.${i}`, i))}
-    <button type="button" onClick={onSave}>이 브라우저에 후보 저장</button>
-    <small>현재 4개 상태를 함께 저장해요. 정식 HDS 등록이나 팀 공유는 아니에요.</small>
+    {onSave && <><button type="button" onClick={onSave}>이 브라우저에 후보 저장</button>
+    <small>현재 4개 상태를 함께 저장해요. 정식 HDS 등록이나 팀 공유는 아니에요.</small></>}
   </div>;
 }

@@ -12,7 +12,8 @@
     "hds:report": "node scripts/hds-report.mjs",
     "hds:sync-ai": "node scripts/sync-ai-kit.mjs",
     "check": "npm run lint && npm run hds:report",
-    "test:studio": "node scripts/test-studio.mjs"
+    "test:studio": "node scripts/test-studio.mjs",
+    "test:flow": "node scripts/test-flow.mjs"
   },
   "dependencies": {
     "@aliceblue567/hds-react": "file:vendor/aliceblue567-hds-react-0.42.0.tgz",
