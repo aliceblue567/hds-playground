@@ -14,7 +14,7 @@
     "check": "npm run lint && npm run hds:report"
   },
   "dependencies": {
-    "@aliceblue567/hds-react": "^0.40.0",
+    "@aliceblue567/hds-react": "file:vendor/aliceblue567-hds-react-0.40.0.tgz",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

@@ -6,10 +6,8 @@
 
 ## 처음 한 번
 
-1. Node 20 이상, GitHub 계정에 이 저장소와 `aliceblue567/hds-storybook` 접근 권한
-2. GitHub → Settings → Developer settings → Personal access tokens → **Tokens (classic)** → `read:packages` 권한으로 토큰 생성
-3. 터미널 설정 파일(`~/.zshrc`)에 `export GITHUB_PACKAGES_TOKEN=ghp_…` 한 줄 (파일에 직접 적지 않습니다)
-4. 설치와 실행
+1. Node 20 이상, GitHub 계정에 이 저장소 접근 권한 (토큰 설정은 필요 없습니다)
+2. 설치와 실행
 
 ```bash
 git clone https://github.com/aliceblue567/hds-playground
@@ -61,6 +59,15 @@ eslint/hds-plugin.mjs     HDS 규칙 lint
 scripts/hds-report.mjs    드리프트 리포트
 scripts/sync-ai-kit.mjs   패키지의 AI Kit을 루트로 복사 (npm run hds:sync-ai — 패키지를 올릴 때마다)
 ```
+
+## HDS 패키지 버전 올리기
+
+HDS 패키지는 `vendor/`에 파일로 들어 있어 비공개 레지스트리 토큰 없이 설치 · 배포됩니다.
+
+1. hds-storybook에서 `npm run build:lib && npm pack` → `aliceblue567-hds-react-<버전>.tgz`
+2. 그 파일을 이 저장소 `vendor/`에 넣고 옛 파일은 지움
+3. `package.json`의 `@aliceblue567/hds-react` 경로를 새 파일 이름으로 바꾸고 `npm install`
+4. `npm run hds:sync-ai` → AGENTS.md · ai/ 갱신 → 커밋
 
 ## 명령
 
