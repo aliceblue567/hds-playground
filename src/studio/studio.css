@@ -84,3 +84,10 @@
 .st-modal__bar { display: flex; align-items: center; gap: var(--hds-spacing-2); padding: var(--hds-spacing-3); border-bottom: 1px solid var(--hds-stroke-neutral-subtle); }
 .st-modal__bar strong { flex: 1; }
 .st-modal pre { margin: 0; padding: var(--hds-spacing-4); overflow: auto; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--hds-caption-lg-size); }
+
+.st-palette__summary, .st-catalog p, .st-quality-note { color: var(--hds-fg-neutral-muted); font-size: var(--hds-caption-lg-size); }
+.st-palette > input { width: 100%; box-sizing: border-box; }
+.st-catalog { margin-top: var(--hds-spacing-5); border-top: 1px solid var(--hds-stroke-neutral-subtle); padding-top: var(--hds-spacing-3); }
+.st-catalog summary { cursor: pointer; }
+.st-catalog a { display: block; padding-block: var(--hds-spacing-1); color: var(--hds-fg-brand-primary); overflow-wrap: anywhere; }
+.st-quality-note { flex-basis: 100%; }

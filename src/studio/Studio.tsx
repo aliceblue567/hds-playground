@@ -45,6 +45,11 @@ export function Studio() {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ kind: 'error' | 'info'; text: string; list?: string[] } | null>(null);
   const [showCode, setShowCode] = useState(false);
+  const [search, setSearch] = useState('');
+  const matches = (text: string) => text.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase());
+  const visiblePresets = presets.filter((p) => matches(`${p.title} ${p.type} ${p.component ?? ''} ${p.group}`));
+  const available = new Set(presets.filter(p => p.kind === 'hds').map(p => p.component ?? p.type));
+  const otherComponents = catalog.components.filter(c => !available.has(c.name) && matches(`${c.name} ${c.group}`));
 
   useEffect(() => save({ title, blocks }), [title, blocks]);
 
@@ -85,9 +90,9 @@ export function Studio() {
   const body = blocks.filter((b) => !presetByType.get(b.type)?.fixed);
   const bottom = blocks.filter((b) => presetByType.get(b.type)?.fixed === 'bottom');
   const code = useMemo(() => {
-    const used = [...new Set(blocks.map((b) => presetByType.get(b.type)).filter((p) => p?.kind === 'hds').map((p) => p!.component ?? p!.type))];
+    const used = [...new Set(blocks.map((b) => presetByType.get(b.type)).filter((p) => p?.kind === 'hds').flatMap((p) => [p!.component ?? p!.type, ...(p!.imports ?? [])]))];
     if (blocks.some((b) => b.type === 'BottomFixed' && b.props.panelValue)) used.push('BottomPanelText');
-    return `import { ${used.sort().join(', ')} } from '@aliceblue567/hds-react';\n\nexport function Screen() {\n  return (\n    <>\n${blocks.map((b) => blockCode(presetByType.get(b.type)!, b.props).split('\n').map((l) => '      ' + l).join('\n')).join('\n')}\n    </>\n  );\n}\n`;
+    return `import '@aliceblue567/hds-react/styles';\nimport { ${used.sort().join(', ')} } from '@aliceblue567/hds-react';\n\nexport function Screen() {\n  return (\n    <>\n${blocks.map((b) => blockCode(presetByType.get(b.type)!, b.props).split('\n').map((l) => '      ' + l).join('\n')).join('\n')}\n    </>\n  );\n}\n`;
   }, [blocks]);
 
   const renderOne = (b: Block) => {
@@ -95,7 +100,7 @@ export function Studio() {
     if (!p) return null;
     return (
       <div key={b.id} className={['st-block', p.inset && 'st-block--inset', p.kind === 'custom' && 'st-block--custom', !preview && sel === b.id && 'is-selected'].filter(Boolean).join(' ')}>
-        <Boundary name={p.title}>{renderBlock(p, b.props)}</Boundary>
+        <Boundary key={JSON.stringify(b.props)} name={p.title}>{renderBlock(p, b.props)}</Boundary>
         {!preview && <div className="st-block__hit" onClick={() => setSel(b.id)} title={`${p.title} (${p.component ?? p.type})`}><span>{p.title}</span></div>}
       </div>
     );
@@ -106,7 +111,7 @@ export function Studio() {
       <header className="st-top">
         <a href="#/" className="st-back">← 목록</a>
         <strong className="st-brand">HDS Studio</strong>
-        <span className="st-ver">hds-react {catalog.version} · 컴포넌트 {catalog.components.length}</span>
+        <span className="st-ver">hds-react {catalog.version}</span>
         <form className="st-prompt" onSubmit={(e) => { e.preventDefault(); run(); }}>
           <select value={mode} onChange={(e) => setMode(e.target.value as 'new' | 'edit')} aria-label="프롬프트 방식">
             <option value="new">새로 만들기</option>
@@ -118,16 +123,24 @@ export function Studio() {
       </header>
 
       <aside className="st-palette" aria-label="블록 팔레트">
-        {[...new Set(presets.map((p) => p.group))].map((g) => (
+        <p className="st-palette__summary">추가 가능한 HDS 블록 {presets.filter(p => p.kind === 'hds').length}종 · 라이브러리 {catalog.components.length}개</p>
+        <input type="text" aria-label="컴포넌트 검색" placeholder="이름 또는 그룹 검색" value={search} onChange={e => setSearch(e.target.value)} />
+        {[...new Set(visiblePresets.map((p) => p.group))].map((g) => (
           <section key={g}>
             <h3>{g}</h3>
-            {presets.filter((p) => p.group === g).map((p) => (
+            {visiblePresets.filter((p) => p.group === g).map((p) => (
               <button key={p.type} type="button" onClick={() => add(p.type)} className={p.kind !== 'hds' ? `is-${p.kind}` : undefined}>
                 <span>{p.title}</span><code>{p.component ?? p.type}</code>
               </button>
             ))}
           </section>
         ))}
+        {visiblePresets.length === 0 && <p>추가할 수 있는 블록이 없어요.</p>}
+        <details className="st-catalog" open={search.trim() ? true : undefined}>
+          <summary>그 밖의 라이브러리 컴포넌트 ({otherComponents.length})</summary>
+          <p>조합 내부 부품이나 아직 Studio에 연결하지 않은 항목이에요. 문서에서 사용법을 확인할 수 있어요.</p>
+          {otherComponents.map(c => <a key={c.name} href={c.storybook ?? 'https://hds-storybook.vercel.app'} target="_blank" rel="noreferrer">{c.name} ↗</a>)}
+        </details>
       </aside>
 
       <main className="st-stage">
@@ -152,7 +165,8 @@ export function Studio() {
           <span>HDS <b>{stats.hds}</b></span>
           <span>레이아웃 <b>{stats.layout}</b></span>
           <span className={stats.custom ? 'is-warn' : undefined}>커스텀 <b>{stats.custom}</b></span>
-          <span className={stats.ratio !== null && stats.ratio >= 90 ? 'is-ok' : 'is-warn'} title="레이아웃을 제외한 HDS ÷ (HDS + 커스텀). 화면 품질 검증 점수가 아니에요.">HDS 비율 <b>{stats.ratio === null ? '—' : `${stats.ratio}%`}</b></span>
+          <span className={stats.ratio !== null && stats.ratio >= 90 ? 'is-ok' : 'is-warn'} title="레이아웃을 제외한 HDS ÷ (HDS + 커스텀). 화면 품질 검증 점수가 아니에요.">HDS 사용률 <b>{stats.ratio === null ? '—' : `${stats.ratio}%`}</b></span>
+          <small className="st-quality-note">컴포넌트 사용 기준이며, 디자인 일치도 검증 점수는 아니에요.</small>
           <button type="button" onClick={() => setShowCode(true)}>코드 보기</button>
           <button type="button" onClick={() => { setBlocks(SAMPLE()); setTitle('상품 상세 (예시)'); setSel(null); }}>예시 불러오기</button>
           <button type="button" onClick={() => { setBlocks([]); setTitle('새 화면'); setSel(null); setMode('new'); }}>비우기</button>

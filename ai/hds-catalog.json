@@ -1,8 +1,8 @@
 {
   "$schema": "hds-ai-catalog/1",
   "package": "@aliceblue567/hds-react",
-  "version": "0.40.0",
-  "generatedAt": "2026-10-22T06:08:06.099Z",
+  "version": "0.42.0",
+  "generatedAt": "2026-10-22T07:57:27.346Z",
   "figma": {
     "components": "KfsYC8kUEEgalu8W45rYvY",
     "foundation": "IYYVEEJjRNjYkZ6HXmRcuB"
@@ -540,6 +540,14 @@
           "values": null,
           "required": false,
           "figma": null
+        },
+        {
+          "name": "onReorder",
+          "type": "(fromIndex: number, toIndex: number) => void",
+          "values": null,
+          "required": false,
+          "figma": null,
+          "description": "순서 변경(선택). 넘기면 미리보기 자체를 눌러 끌어 순서를 바꾼다(별도 핸들 없음, Figma 조합 규칙).\n마우스는 4 이상 움직이면, 터치는 길게(0.3초) 누른 뒤 끈다. 키보드는 항목에 포커스를 두고 왼쪽 · 오른쪽 화살표.\nitems 기준 인덱스로 불린다. 배열을 실제로 옮기는 일은 앱이 한다"
         },
         {
           "name": "accept",
@@ -6491,7 +6499,8 @@
           "values": null,
           "required": false,
           "default": "선택해주세요",
-          "figma": null
+          "figma": null,
+          "description": "기본 「선택해주세요」. 예시값(「서울」 등)은 고른 값처럼 보여 넣지 않는다(2026-10-22 결정)"
         },
         {
           "name": "leadingIcon",
@@ -7182,9 +7191,11 @@
           "type": "boolean",
           "values": null,
           "required": false,
-          "default": true,
-          "figma": null,
-          "description": "표 맨 위 1px 가로선. 위 요소와 붙어 있을 때 경계를 세운다"
+          "default": false,
+          "figma": {
+            "property": "Bordered"
+          },
+          "description": "표 맨 위 1px 가로선. 위 요소와 붙어 있을 때 경계를 세운다. 기본 false(Figma 기본값과 같음, 2026-10-22)"
         },
         {
           "name": "caption",

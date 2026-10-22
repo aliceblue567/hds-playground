@@ -1,6 +1,6 @@
 # AGENTS.md — HDS(Hanatour Design System) 코드 규칙
 
-이 파일은 `@aliceblue567/hds-react@0.40.0` 빌드에서 자동 생성됐다(2026-10-22). 손으로 고치지 않는다 — 고칠 것은 컴포넌트 소스의 JSDoc이나 `scripts/build-ai-kit.mjs`다.
+이 파일은 `@aliceblue567/hds-react@0.42.0` 빌드에서 자동 생성됐다(2026-10-22). 손으로 고치지 않는다 — 고칠 것은 컴포넌트 소스의 JSDoc이나 `scripts/build-ai-kit.mjs`다.
 AI 코딩 도구(Claude Code · Cursor · v0 등)는 이 저장소에서 UI를 만들 때 아래 규칙을 따른다.
 
 ## 1. 절대 규칙
@@ -44,7 +44,7 @@ import { Button, TextInput } from '@aliceblue567/hds-react';
 | `AlertDialog` | Dialog | `open` `dismissible` `title` `description` `subContent` `confirm` … | [Design](https://hds-storybook.vercel.app/?path=/docs/components-dialog--design) |
 | `AlertDialogPanel` | Dialog | `ids` `title` `description` `subContent` `confirm` `cancel` … | [Design](https://hds-storybook.vercel.app/?path=/docs/components-dialog--design) |
 | `AttachmentDropzone` | Attachment Input | `onFiles` `accept` `multiple` `disabled` `label` `hint` … | [Design](https://hds-storybook.vercel.app/?path=/docs/components-attachment-input--design) |
-| `AttachmentInput` | Attachment Input | `items` `max` `onAdd` `onRemove` `onRetry` `accept` … | [Design](https://hds-storybook.vercel.app/?path=/docs/components-attachment-input--design) |
+| `AttachmentInput` | Attachment Input | `items` `max` `onAdd` `onRemove` `onRetry` `onReorder` … | [Design](https://hds-storybook.vercel.app/?path=/docs/components-attachment-input--design) |
 | `AttachmentItem` | Attachment Input | `onRemove` `onRetry` `onOpen` `className` `id` `type` … | [Design](https://hds-storybook.vercel.app/?path=/docs/components-attachment-input--design) |
 | `AttachmentTrigger` | Attachment Input | `count` `label` `forcePressed` | [Design](https://hds-storybook.vercel.app/?path=/docs/components-attachment-input--design) |
 | `Avatar` | Avatar | `size` `variant` `src` `name` `badge` `editable` … | [Design](https://hds-storybook.vercel.app/?path=/docs/components-avatar--design) |

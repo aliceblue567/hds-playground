@@ -1,4 +1,4 @@
-# HDS 컴포넌트 카탈로그 — `@aliceblue567/hds-react@0.40.0`
+# HDS 컴포넌트 카탈로그 — `@aliceblue567/hds-react@0.42.0`
 
 자동 생성(2026-10-22). 각 prop의 `← Figma`는 Figma 컴포넌트 속성과의 대응이다. Figma 디자인을 받아 구현할 때 이 대응표로 변환한다. 규칙은 `AGENTS.md`에 있다.
 
@@ -122,6 +122,7 @@ PC 전용 드래그 앤 드롭 영역. 320 × 120, 점선 1.5(6 · 4). 누르면
 - `onAdd`: (files: File[]) => void — 파일을 골랐거나(Trigger · Dropzone) 놓았을 때. 남은 자리만큼만 넘긴다
 - `onRemove?`: (id: string) => void
 - `onRetry?`: (id: string) => void
+- `onReorder?`: (fromIndex: number, toIndex: number) => void — 순서 변경(선택). 넘기면 미리보기 자체를 눌러 끌어 순서를 바꾼다(별도 핸들 없음, Figma 조합 규칙).
 - `accept?`: string (기본 'image/*,video/*')
 - `dropzone?`: boolean (기본 false) — PC에서 Dropzone을 줄 위에 둔다. 모바일 · 앱에서는 쓰지 않는다
 - `hint?`: string — Dropzone 작은 문구
@@ -1200,7 +1201,7 @@ Figma Search Field (16228:3324). 회색 면 위의 검색 입력. 높이 40
 - `onChange?`: (value: string) => void
 - `onOpen?`: () => void — type=date · time · search이거나 options가 없을 때 필드를 누르면 불린다
 - `displayValue?`: string — date · time · search에서 바깥이 정한 표시값(예: 2026.10.15)
-- `placeholder?`: string (기본 '선택해주세요')
+- `placeholder?`: string (기본 '선택해주세요') — 기본 「선택해주세요」. 예시값(「서울」 등)은 고른 값처럼 보여 넣지 않는다(2026-10-22 결정)
 - `leadingIcon?`: IconData ← Figma `Show Leading Icon` — (type=default만). 앞 아이콘. date · time · search는 아이콘이 정해져 있다
 - `description?`: string ← Figma `Show Helper Text` — (type=default만). 필드 아래 도움말
 - `status?`: 'normal' · 'negative' (기본 'normal') ← Figma `Status` — (type=default만). negative면 테두리 · 도움말이 빨강, aria-invalid
@@ -1332,7 +1333,7 @@ Table — 골격. thead · tbody · tr에 TableHead · TableCell을 조합한다
 문서: https://hds-storybook.vercel.app/?path=/docs/components-tables--design · Figma 가이드 node `8390:3236`
 
 - `size?`: 'small' · 'large' (기본 'small') — Small 48 · 13(모바일 · 조밀한 목록) · Large 56 · 15(PC 기본)
-- `bordered?`: boolean (기본 true) — 표 맨 위 1px 가로선. 위 요소와 붙어 있을 때 경계를 세운다
+- `bordered?`: boolean (기본 false) ← Figma `Bordered` — 표 맨 위 1px 가로선. 위 요소와 붙어 있을 때 경계를 세운다. 기본 false(Figma 기본값과 같음, 2026-10-22)
 - `caption`: string — 무엇을 비교하는 표인지. 스크린 리더가 표 이름으로 읽는다
 - `showCaption?`: boolean (기본 false) — caption을 눈에도 보이게
 - `columnWidths?`: (string | number | undefined)[] — 열 폭 고정(<colgroup>). 숫자는 px

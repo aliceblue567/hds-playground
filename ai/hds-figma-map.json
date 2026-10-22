@@ -1,5 +1,5 @@
 {
-  "version": "0.40.0",
+  "version": "0.42.0",
   "components": [
     {
       "component": "Accordion",
@@ -1788,6 +1788,18 @@
           "figma": "ic-close",
           "code": "onClose",
           "values": null
+        }
+      ]
+    },
+    {
+      "component": "Table",
+      "figmaGuideNode": "8390:3236",
+      "props": [
+        {
+          "figma": "Bordered",
+          "code": "bordered",
+          "values": null,
+          "default": false
         }
       ]
     },

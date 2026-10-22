@@ -24,6 +24,7 @@ export type Preset = {
   defaults: Record<string, unknown>;
   extraFields?: Field[];
   hiddenProps?: string[];
+  imports?: string[]; // 조합 블록이 함께 쓰는 HDS 부품
   inset?: boolean; // 좌우 화면 여백(20)을 줄지
   fixed?: 'top' | 'bottom';
   render?: (p: Record<string, unknown>) => ReactNode;
@@ -57,7 +58,7 @@ export const presets: Preset[] = [
   { type: 'LabelRow', component: 'Label', title: '라벨 묶음', group: '콘텐츠', kind: 'hds', inset: true, defaults: { labels: '무료취소, 노쇼핑, 출발확정', variant: 'tinted', color: 'mint', size: 'small' },
     hiddenProps: ['children', 'leadingIcon', 'trailingIcon'], extraFields: [{ path: 'labels', label: '라벨들(쉼표로 구분)', kind: 'text' }],
     render: ({ labels, ...p }) => <div className="st-row">{list(labels).map((l) => <H.Label key={l} {...p}>{l}</H.Label>)}</div>,
-    code: ({ labels, ...p }) => list(labels).map((l) => `<Label${props(p)}>${l}</Label>`).join('\n') },
+    code: ({ labels, ...p }) => list(labels).map((l) => `<Label${props(p)}>{${jsx(l)}}</Label>`).join('\n') },
   { type: 'Rating', title: '별점', group: '콘텐츠', kind: 'hds', inset: true, defaults: { value: 4.7, reviewCount: 128, showScore: true }, hiddenProps: ['caption'], extraFields: [{ path: 'value', label: 'value (점수)', kind: 'number' }] },
   { type: 'AccordionGroup', title: '아코디언', group: '콘텐츠', kind: 'hds', defaults: { size: 'medium', type: 'fill', items: [{ title: '포함 사항', children: '왕복 항공권, 호텔 3박, 전 일정 가이드' }, { title: '불포함 사항', children: '개인 경비, 선택 관광, 여행자 보험' }] },
     extraFields: [{ path: 'items.0.title', label: '항목 1 제목', kind: 'text' }, { path: 'items.0.children', label: '항목 1 내용', kind: 'text' }, { path: 'items.1.title', label: '항목 2 제목', kind: 'text' }, { path: 'items.1.children', label: '항목 2 내용', kind: 'text' }] },
@@ -77,10 +78,47 @@ export const presets: Preset[] = [
   { type: 'RadioItem', title: '라디오', group: '입력 · 선택', kind: 'hds', inset: true, defaults: { label: '신용 · 체크카드', helper: '무이자 할부 최대 6개월', name: 'studio-radio' } },
   { type: 'CounterItem', title: '인원 카운터', group: '입력 · 선택', kind: 'hds', inset: true, defaults: { label: '성인', price: 1290000, defaultValue: 2, min: 1, max: 9 }, hiddenProps: ['tooltip', 'holdToRepeat', 'forcePressed', 'description'] },
 
+  // 추가 블록도 HDS 구현을 그대로 사용한다. 하위 부품은 조합 안에 둔다.
+  { type: 'SearchField', title: '검색 입력', group: '입력 · 선택', kind: 'hds', inset: true,
+    defaults: { label: '여행지 검색', placeholder: '여행지를 검색해주세요' },
+    extraFields: [{ path: 'placeholder', label: '안내 문구', kind: 'text' }] },
+  { type: 'Select', title: '셀렉트', group: '입력 · 선택', kind: 'hds', inset: true,
+    defaults: { label: '출발 공항', type: 'default', options: [{ value: 'icn', label: '인천' }, { value: 'gmp', label: '김포' }, { value: 'pus', label: '김해' }] },
+    hiddenProps: ['type', 'displayValue', 'placeholder', 'leadingIcon'],
+    extraFields: [0, 1, 2].map((i) => ({ path: `options.${i}.label`, label: `선택지 ${i + 1}`, kind: 'text' as const })) },
+  { type: 'DatePicker', title: '날짜 선택', group: '날짜 · 범위', kind: 'hds',
+    defaults: { layout: 'inline', selection: 'single', defaultMonth: '2026-11', ariaLabel: '출발일 선택' },
+    hiddenProps: ['month', 'days', 'defaultView'],
+    extraFields: [{ path: 'defaultMonth', label: '처음 보이는 달 (YYYY-MM)', kind: 'text' }] },
+  { type: 'SliderRange', title: '범위 선택', group: '날짜 · 범위', kind: 'hds', inset: true,
+    defaults: { label: '여행 기간', min: 1, max: 30, step: 1, defaultValue: [3, 10], showBubble: true },
+    extraFields: [{ path: 'defaultValue.0', label: '처음 최소값', kind: 'number' }, { path: 'defaultValue.1', label: '처음 최대값', kind: 'number' }] },
+  { type: 'RatingInput', title: '별점 입력', group: '입력 · 선택', kind: 'hds', inset: true, defaults: { label: '여행 만족도', defaultValue: 3 },
+    extraFields: [{ path: 'defaultValue', label: '처음 별점', kind: 'number' }] },
+  { type: 'Avatar', title: '아바타', group: '콘텐츠', kind: 'hds', inset: true, defaults: { name: '여행자', variant: 'filled', size: 48 },
+    hiddenProps: ['badge', 'editable'], extraFields: [{ path: 'name', label: '접근성 이름', kind: 'text' }] },
+  { type: 'LabelBadge', title: '라벨 배지', group: '콘텐츠', kind: 'hds', inset: true, defaults: { children: '출발 확정', variant: 'tinted', size: 'medium' } },
+  { type: 'NotificationBadge', title: '알림 배지', group: '콘텐츠', kind: 'hds', inset: true, defaults: { type: 'count', count: 3, label: '읽지 않은 알림' } },
+  { type: 'Pagination', title: '페이지 이동', group: '콘텐츠', kind: 'hds', inset: true, defaults: { total: 5, indicator: 'count' }, hiddenProps: ['page'] },
+  { type: 'Table', title: '정보 표', group: '콘텐츠', kind: 'hds', inset: true, imports: ['TableHead', 'TableCell'],
+    defaults: { caption: '예약 요약', size: 'small', bordered: false, rowLabel1: '여행자', rowValue1: '성인 2명', rowLabel2: '여행 기간', rowValue2: '3박 4일' },
+    hiddenProps: ['children', 'columnWidths'],
+    extraFields: ['rowLabel1', 'rowValue1', 'rowLabel2', 'rowValue2'].map((path, i) => ({ path, label: ['항목 1', '값 1', '항목 2', '값 2'][i], kind: 'text' as const })),
+    render: ({ rowLabel1, rowValue1, rowLabel2, rowValue2, ...p }) => <H.Table {...p}><tbody>{[[rowLabel1, rowValue1], [rowLabel2, rowValue2]].map(([label, value], i) => <tr key={i}><H.TableHead scope="row">{String(label)}</H.TableHead><H.TableCell>{String(value)}</H.TableCell></tr>)}</tbody></H.Table>,
+    code: ({ rowLabel1, rowValue1, rowLabel2, rowValue2, ...p }) => `<Table${props(p)}><tbody>${[[rowLabel1, rowValue1], [rowLabel2, rowValue2]].map(([label, value]) => `<tr><TableHead scope="row">{${jsx(String(label))}}</TableHead><TableCell>{${jsx(String(value))}}</TableCell></tr>`).join('')}</tbody></Table>` },
+  { type: 'Toast', title: '토스트', group: '피드백 · 로딩', kind: 'hds', inset: true, defaults: { message: '변경 내용을 저장했어요', variant: 'default' }, hiddenProps: ['icon'] },
+  { type: 'Snackbar', title: '스낵바', group: '피드백 · 로딩', kind: 'hds', inset: true, defaults: { message: '선택한 항목을 담았어요', description: '예약 전 내용을 확인해주세요' }, hiddenProps: ['leading', 'action'] },
+  { type: 'ProgressCircle', title: '진행 표시', group: '피드백 · 로딩', kind: 'hds', inset: true, defaults: { label: '여행 정보를 불러오는 중', tone: 'brand', size: 'medium', value: 60 },
+    extraFields: [{ path: 'value', label: '진행률 (0–100)', kind: 'number' }] },
+  { type: 'SkeletonText', title: '텍스트 로딩', group: '피드백 · 로딩', kind: 'hds', inset: true, defaults: {} },
+  { type: 'SkeletonRectangle', title: '영역 로딩', group: '피드백 · 로딩', kind: 'hds', inset: true, defaults: { width: '100%', height: 120 },
+    extraFields: [{ path: 'height', label: '높이', kind: 'number' }] },
+  { type: 'SkeletonCircle', title: '원형 로딩', group: '피드백 · 로딩', kind: 'hds', inset: true, defaults: { size: 48 } },
+
   // ── 레이아웃 · 커스텀 ──
   { type: 'SectionTitle', title: '섹션 제목', group: '레이아웃 · 커스텀', kind: 'layout', defaults: { text: '섹션 제목' }, extraFields: [{ path: 'text', label: '제목', kind: 'text' }],
     render: ({ text }) => <h2 className="st-section-title">{String(text)}</h2>,
-    code: ({ text }) => `<h2 className="section-title">${text}</h2>` },
+    code: ({ text }) => `<h2 className="section-title">{${jsx(String(text))}}</h2>` },
   { type: 'Custom', title: 'HDS에 없는 것', group: '레이아웃 · 커스텀', kind: 'custom', defaults: { label: '요금 요약 카드', reason: '소계 · 할인 · 합계 강조 행이 HDS에 없음' },
     extraFields: [{ path: 'label', label: '무엇', kind: 'text' }, { path: 'reason', label: '왜 HDS로 안 되나', kind: 'text' }],
     render: ({ label, reason }) => <div className="st-custom" data-hds="custom" data-hds-reason={String(reason)}><strong>커스텀 · {String(label)}</strong><span>{String(reason)}</span></div>,
@@ -142,5 +180,5 @@ export function blockCode(preset: Preset, p: Record<string, unknown>): string {
   if (preset.code) return preset.code(p);
   const name = preset.component ?? preset.type;
   const { children, ...rest } = p;
-  return children !== undefined && typeof children === 'string' ? `<${name}${props(rest)}>${children}</${name}>` : `<${name}${props(p)} />`;
+  return children !== undefined && typeof children === 'string' ? `<${name}${props(rest)}>{${jsx(children)}}</${name}>` : `<${name}${props(p)} />`;
 }

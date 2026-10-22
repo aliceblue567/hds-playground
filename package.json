@@ -15,7 +15,7 @@
     "test:studio": "node scripts/test-studio.mjs"
   },
   "dependencies": {
-    "@aliceblue567/hds-react": "file:vendor/aliceblue567-hds-react-0.40.0.tgz",
+    "@aliceblue567/hds-react": "file:vendor/aliceblue567-hds-react-0.42.0.tgz",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
